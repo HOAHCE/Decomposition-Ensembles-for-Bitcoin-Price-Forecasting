@@ -1,0 +1,44 @@
+{
+  "title": "Decomposition Ensembles for Bitcoin Price Forecasting: data, code and results",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "MIT",
+  "language": "eng",
+  "version": "1.0.0",
+  "description": "<p>Data, code and results supporting the manuscript <em>\"Decomposition Ensembles for Bitcoin Price Forecasting\"</em>, submitted to <em>PeerJ Computer Science</em>.</p><p>The study forecasts the daily Bitcoin price by decomposing the series before learning rather than fitting a single model to the raw series. Daily OHLCV data covering 2014-09-17 to 2025-06-11 (3,921 records) is log-transformed, split chronologically, and decomposed with STL or robust STL at a period of 30 days. Separate deep learners (TCN, N-BEATS, GRU) are fitted to the trend, seasonal and remainder components and combined by a validation-guided rule (Auto selection, simple averaging, weighted averaging). Forecasts are evaluated at horizons of 1, 7, 14 and 28 days using RMSE, MAPE, R-squared and directional accuracy, averaged over ten random seeds on a 365-day test period, with Diebold-Mariano tests and the Model Confidence Set at alpha = 0.10.</p><p>This deposit contains the raw data, the experiment notebook with its cell outputs intact, the extracted result tables, and the figures and table of the manuscript.</p><p><strong>Licensing:</strong> source code is released under the MIT License; the data, figures, tables and result files are released under CC BY 4.0. See LICENSE and LICENSE-DATA.md in the repository.</p>",
+  "creators": [
+    {
+      "name": "Tran Thai, Hoa",
+      "affiliation": "University of Economics, Hue University, Hue, Viet Nam; University of Sciences, Hue University, Hue, Viet Nam"
+    },
+    {
+      "name": "Manh Le, Thanh",
+      "affiliation": "University of Sciences, Hue University, Hue, Viet Nam"
+    },
+    {
+      "name": "Nguyen-Dinh, Cuong H.",
+      "affiliation": "University of Finance and Marketing, Hue, Viet Nam"
+    }
+  ],
+  "keywords": [
+    "Bitcoin",
+    "cryptocurrency",
+    "time series forecasting",
+    "STL decomposition",
+    "robust STL",
+    "deep ensembles",
+    "temporal convolutional network",
+    "N-BEATS",
+    "gated recurrent unit",
+    "model confidence set",
+    "reproducible research"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ],
+  "notes": "Supporting material for a manuscript submitted to PeerJ Computer Science. Add the article DOI as a related identifier (relation: isSupplementTo) once the article is published."
+}

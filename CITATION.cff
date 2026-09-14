@@ -7,8 +7,16 @@ abstract: >-
   couples STL and robust STL decomposition of daily Bitcoin prices with deep
   component learners (TCN, N-BEATS, GRU) and validation-guided forecast
   combination, evaluated at horizons of 1, 7, 14 and 28 days.
-type: dataset
-license: CC-BY-4.0
+type: software
+version: 1.0.0
+license: MIT
+# Source code is MIT; the data, figures, tables and results are CC BY 4.0
+# (see LICENSE-DATA.md). Zenodo records a single licence, so MIT is used here.
+#
+# After archiving on Zenodo (see docs/zenodo-archiving.md), uncomment the next
+# line and insert the CONCEPT DOI — the one that always resolves to the newest
+# version — not the version-specific DOI:
+# doi: 10.5281/zenodo.XXXXXXX
 repository-code: "https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting"
 keywords:
   - Bitcoin

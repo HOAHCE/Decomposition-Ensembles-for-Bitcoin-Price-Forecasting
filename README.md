@@ -94,7 +94,7 @@ the † markers of Table 3 exactly at all four horizons.
 | Tables 1, 2 and any others | Only Table 3 was present in the submission package. |
 | Per-seed metrics and test-period predictions | Written by the notebook to its Drive output folder during the run; see [`results/README.md`](results/README.md). |
 | Data provenance statement | Source and retrieval date of the raw series; see [`data/README.md`](data/README.md). |
-| Zenodo DOI | GitHub is not a permanent archive; see [`docs/peerj-submission-checklist.md`](docs/peerj-submission-checklist.md). |
+| Zenodo DOI | GitHub is not a permanent archive. Metadata is ready in [`.zenodo.json`](.zenodo.json); follow [`docs/zenodo-archiving.md`](docs/zenodo-archiving.md). |
 
 ## Reproducing the results
 
@@ -115,6 +115,23 @@ A complete run covers ten seeds × three architectures × three components × tw
 decompositions and takes hours of GPU time. To read the published numbers without
 re-running anything, open the committed notebook — its outputs are intact — or
 the CSVs in [`results/`](results/README.md).
+
+## Archiving and DOI
+
+The repository is set up to be archived on Zenodo, which stores a permanent
+snapshot and issues a DOI — GitHub alone does not satisfy the journal's
+requirement for a permanent archive. The deposit metadata (title, all three
+authors with affiliations, description, keywords, licence) is already in
+[`.zenodo.json`](.zenodo.json), so Zenodo uses it rather than guessing.
+
+The archiving itself has not been done yet: it needs the repository owner to log
+in to Zenodo and switch the repository on before a release is created.
+[`docs/zenodo-archiving.md`](docs/zenodo-archiving.md) gives the exact steps and
+explains why that order matters.
+
+Once the DOI exists, add its badge here, record the **concept DOI** in
+[`CITATION.cff`](CITATION.cff), and cite it in the manuscript's Data
+Availability statement.
 
 ## Licence
 

@@ -17,9 +17,11 @@ working checklist, not a substitute for the journal's own text.
       both satisfy the requirement for an open licence. Confirm the authors
       agree with this split.
 - [ ] **Repository archived with a DOI.** GitHub alone is not a permanent
-      archive. Create a release and archive it via
-      [Zenodo](https://zenodo.org/) (or Figshare / Dryad) to mint a DOI, then
-      cite that DOI in the Data Availability statement and add it to
+      archive. Deposit metadata is prepared in [`../.zenodo.json`](../.zenodo.json)
+      and the repository is public with an open licence, so it is ready to
+      archive; the remaining steps need the repository owner's Zenodo login and
+      are set out in [`zenodo-archiving.md`](zenodo-archiving.md). Cite the
+      resulting **concept DOI** in the Data Availability statement and add it to
       [`../CITATION.cff`](../CITATION.cff).
 - [ ] **Data Availability statement written** in the manuscript, naming this
       repository and the archived DOI.
