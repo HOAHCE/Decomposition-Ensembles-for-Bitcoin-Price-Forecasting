@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it as below."
+title: "Decomposition Ensembles for Bitcoin Price Forecasting"
+abstract: >-
+  Data, code and results supporting the manuscript "Decomposition Ensembles for
+  Bitcoin Price Forecasting", submitted to PeerJ Computer Science. The study
+  couples STL and robust STL decomposition of daily Bitcoin prices with deep
+  component learners (TCN, N-BEATS, GRU) and validation-guided forecast
+  combination, evaluated at horizons of 1, 7, 14 and 28 days.
+type: dataset
+license: CC-BY-4.0
+repository-code: "https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting"
+keywords:
+  - Bitcoin
+  - time series forecasting
+  - STL decomposition
+  - deep ensembles
+  - TCN
+  - N-BEATS
+  - GRU
+  - model confidence set
+authors:
+  - given-names: "Hoa"
+    family-names: "Tran Thai"
+    email: "tranthaihoa@hueuni.edu.vn"
+    affiliation: "University of Economics, Hue University, Hue, Viet Nam; University of Sciences, Hue University, Hue, Viet Nam"
+  - given-names: "Thanh"
+    family-names: "Manh Le"
+    email: "lmthanh@hueuni.edu.vn"
+    affiliation: "University of Sciences, Hue University, Hue, Viet Nam"
+  - given-names: "Cuong H."
+    family-names: "Nguyen-Dinh"
+    email: "ndhcuong@ufm.edu.vn"
+    affiliation: "University of Finance and Marketing, Hue, Viet Nam"
