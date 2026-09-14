@@ -1,0 +1,20 @@
+Model name,Pvalue
+STL-Auto,1.0
+RobustSTL-Auto,0.238
+STL-TCN,0.062
+STL-EnsAvg,0.062
+STL-EnsWgt,0.062
+RobustSTL-NBEATS,0.048
+STL-NBEATS,0.048
+RobustSTL-EnsWgt,0.003
+RobustSTL-EnsAvg,0.003
+STL-GRU,0.001
+RW-drift,0.001
+TCN(direct),0.001
+RobustSTL-ARIMA-LSTM,0.0
+RobustSTL-TCN,0.0
+STL-ARIMA-LSTM,0.0
+RobustSTL-GRU,0.0
+NBEATS(direct),0.0
+GRU(direct),0.0
+ARIMA,0.0

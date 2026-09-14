@@ -1,0 +1,5 @@
+h,VoDich,RMSE,R2,MAPE,DA,trong_MCS,vs_baseline,Wilcoxon_p,hon_baseline,Top3
+1,STL-Auto,1821±129,0.9888,1.793,64.7,có,RW-drift,0.001,có (p<0.05),"STL-Auto(1821), STL-EnsWgt(1833), STL-EnsAvg(1..."
+7,RobustSTL-EnsAvg,2359±121,0.9814,2.35,83.7,không,RW-drift,0.001,có (p<0.05),"RobustSTL-EnsAvg(2359), RobustSTL-EnsWgt(2361)..."
+14,STL-EnsAvg,2153±102,0.9845,2.126,90.9,không,RW-drift,0.001,có (p<0.05),"STL-EnsAvg(2153), STL-EnsWgt(2153), RobustSTL-..."
+28,STL-Auto,4219±420,0.9378,3.846,88.3,có,RW-drift,0.001,có (p<0.05),"STL-Auto(4219), STL-EnsWgt(4238), STL-GRU(4240)"

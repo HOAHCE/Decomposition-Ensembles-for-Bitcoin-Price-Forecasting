@@ -7,11 +7,12 @@ working checklist, not a substitute for the journal's own text.
 
 ## Required
 
-- [ ] **Raw data deposited.** PeerJ requires the raw data underlying the article
-      to be made available. Place it in [`../data/raw/`](../data/README.md) with
-      its source, retrieval date and licence recorded.
-- [ ] **Code deposited.** All analysis code that produced the reported figures,
-      tables and statistics goes in [`../code/`](../code/README.md).
+- [x] **Raw data deposited** — [`../data/raw/BTC_USD_daily_2014-09-17_2025-06-11.csv`](../data/README.md),
+      3,921 daily records. Still to record: the download source, the retrieval
+      date and the terms of use of that source.
+- [x] **Code deposited** — [`../code/decomposition_ensemble_experiments.ipynb`](../code/README.md),
+      committed with its cell outputs intact, plus the extraction script that
+      produced [`../results/`](../results/README.md).
 - [ ] **Open licence applied.** Content here is CC BY 4.0 and code is MIT —
       both satisfy the requirement for an open licence. Confirm the authors
       agree with this split.
@@ -31,10 +32,12 @@ working checklist, not a substitute for the journal's own text.
 ## Strongly recommended
 
 - [ ] Exact package versions pinned in [`../requirements.txt`](../requirements.txt).
-- [ ] Random seeds documented — the results are means over ten seeds.
-- [ ] Hardware and runtime recorded, so reviewers can judge feasibility.
-- [ ] A single entry point (`code/run_all.py`) that regenerates every reported
-      number from the raw data.
+      TensorFlow is pinned at 2.20.0 from the notebook's own output; the rest came
+      from the Colab image and still need pinning.
+- [x] Random seeds documented — 42–51, set in the notebook's `CONFIG` cell.
+- [x] Hardware recorded — Google Colab, T4 GPU, roughly 485 s per seed.
+- [x] A single entry point — the notebook runs end to end from the raw CSV;
+      two `CONFIG` paths must be changed to run it outside Colab.
 - [ ] Figure and table files in the repository match the manuscript versions
       one to one, with identical numbering.
 - [ ] ORCID iDs added for all three authors in `CITATION.cff` and at submission.
@@ -44,8 +47,10 @@ working checklist, not a substitute for the journal's own text.
 The submission package supplied only Figures 1–4 and Table 3. Before submitting,
 confirm that every figure and table cited in the manuscript is present here:
 
-- [ ] Figures 1–4 present — **done**.
-- [ ] Table 3 present — **done**.
+- [x] Figures 1–4 present.
+- [x] Table 3 present, and cross-checked against `results/RMSE_mean_matrix.csv`:
+      75 of 76 values agree exactly. Fix the one rounding slip in the manuscript —
+      STL-ARIMA-LSTM at *h* = 14 is 3,249, printed as 3,250.
 - [ ] Tables 1 and 2 (and any others) added.
 - [ ] Supplemental files added — the `Supplemental/` folder in the submission
       package was empty.

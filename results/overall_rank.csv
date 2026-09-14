@@ -1,0 +1,9 @@
+Model,avg_rank,avg_RMSE
+STL-EnsWgt,2.25,2651.12
+STL-EnsAvg,3.0,2655.44
+STL-Auto,3.5,2747.58
+RobustSTL-EnsAvg,5.25,2853.32
+RobustSTL-Auto,5.25,2828.07
+RobustSTL-EnsWgt,5.25,2851.11
+STL-TCN,6.25,2933.69
+STL-GRU,6.75,2861.07

@@ -1,31 +1,45 @@
 # Data
 
-> **Status: not yet deposited.** No data files were present in the
-> `PeerJ_Computer_Science_Submission_Package` folder this repository was built
-> from. PeerJ requires that the raw data underlying the article be made
-> available, so this directory must be populated before submission.
+## `raw/BTC_USD_daily_2014-09-17_2025-06-11.csv`
 
-## Layout
+The daily Bitcoin series used for every experiment, committed byte for byte as
+supplied by the authors (original working filename: `BTC_all (6).csv`).
 
-| Directory | Contents |
+| Property | Value |
 | :--- | :--- |
-| `raw/` | The daily Bitcoin OHLCV series, 2014–2025, exactly as downloaded — unmodified, with the retrieval date recorded. |
-| `processed/` | Derived files produced by the code: log-transformed series, the STL / rSTL components, and the chronological development / validation / test splits. |
+| Observations | 3,921 daily records |
+| Period | 2014-09-17 to 2025-06-11 |
+| Columns | `Date`, `Open`, `High`, `Low`, `Close`, `Volume`, `Dividends`, `Stock Splits` |
+| Date format | ISO 8601 with UTC offset, e.g. `2014-09-17 00:00:00+00:00` |
+| Currency | USD |
+| Missing values | None |
+| Duplicate dates | None |
+| `Close` range | 178.10 – 111,673.28 USD |
 
-## Documentation to supply with the data
+`Dividends` and `Stock Splits` are zero throughout; they are artefacts of the
+download format and are not used. The column layout is the one produced by
+[`yfinance`](https://pypi.org/project/yfinance/)'s `Ticker.history()` for the
+`BTC-USD` ticker.
 
-For each file in `raw/`, record in this README:
+### Use in the analysis
 
-- the exact source (provider, API endpoint or URL) and the retrieval date;
-- the licence or terms of use of that source, and confirmation that
-  redistribution here is permitted;
-- the column dictionary (name, units, dtype), the date range and the row count;
-- how missing values and exchange outages were handled.
+`Close` is the forecast target. `Open`, `High`, `Low`, `Close` and `Volume` are
+used as input features (`USE_OHLCV_FEATURES=True`). The series is log-transformed,
+then decomposed by STL and robust STL at a period of 30 days, and split
+chronologically into 3,556 training and 365 test observations — the last 365 days
+form the test period reported in the manuscript.
 
-The test period is described in Table 3 as the final 365 days; state the exact
-start and end dates of the development, validation and test blocks here so the
-splits can be reconstructed independently.
+### To be completed by the authors before submission
 
-If the raw series cannot be redistributed for licensing reasons, place a
-download script in [`../code/`](../code) that reconstructs it byte for byte, and
-record the checksum of the expected file here.
+- [ ] **Exact provenance.** State the download source and the retrieval date. If
+      the file came from `yfinance` / Yahoo Finance, say so explicitly and give
+      the ticker and the date it was pulled, so the series can be reconstructed.
+- [ ] **Terms of use.** Confirm that the source permits redistribution of the
+      series in this repository, and name the applicable terms.
+
+## `processed/`
+
+Empty. The decompositions and the train/validation/test splits are derived
+deterministically from the raw file by the notebook, so they are not stored
+separately. Running the notebook writes its intermediate and final outputs to
+[`../results/`](../results).

@@ -1,24 +1,26 @@
 # Python dependencies for the decomposition-ensemble experiments.
 #
-# NOTE FOR THE AUTHORS: the packages below are those implied by the methods
-# reported in the manuscript (Figure 1). Before submission, replace the
-# ">=" constraints with the exact versions used to produce the results, e.g.
-# by running `pip freeze > requirements.txt` inside the analysis environment.
-# PeerJ expects the computational environment to be reproducible.
+# The experiments were run on Google Colab with a T4 GPU. TensorFlow 2.20.0 is
+# the version the committed notebook recorded in its own output; the remaining
+# packages were supplied by the Colab image or installed by the notebook's first
+# cell, so their exact versions were not captured. Pin them to the versions in
+# the run environment before submission (`pip freeze`).
 
-numpy>=1.24
-pandas>=2.0
-scipy>=1.10
-scikit-learn>=1.3
+# Deep component learners: TCN, N-BEATS, GRU (tf.keras)
+tensorflow==2.20.0
 
-# STL and robust STL decomposition, ARIMA and Diebold-Mariano / MCS testing
+# STL / robust STL decomposition and ARIMA
 statsmodels>=0.14
 pmdarima>=2.0
 
-# Deep component learners (TCN, N-BEATS, GRU)
-torch>=2.0
-pytorch-lightning>=2.0
-darts>=0.27
+# Model Confidence Set and bootstrap inference
+arch>=6.0
 
-# Figures
+numpy>=1.26
+pandas>=2.0
+scipy>=1.11
 matplotlib>=3.7
+
+# Only needed by code/extract_notebook_results.py (parses the notebook's
+# rendered HTML tables); not required to run the experiments.
+lxml>=4.9

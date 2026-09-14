@@ -51,62 +51,70 @@ membership reported at alpha = 0.10. Full numbers:
 
 ```
 .
-├── code/           Analysis code                    (to be deposited — see below)
+├── code/
+│   ├── decomposition_ensemble_experiments.ipynb   Full experiment, outputs intact
+│   └── extract_notebook_results.py                Notebook outputs -> results/*.csv
 ├── data/
-│   ├── raw/        Daily Bitcoin OHLCV, 2014–2025   (to be deposited — see below)
-│   └── processed/  Decompositions and splits        (to be deposited — see below)
-├── figures/        Figures 1–4, publication resolution
-├── results/        Per-seed metrics and predictions (to be deposited — see below)
+│   ├── raw/BTC_USD_daily_2014-09-17_2025-06-11.csv   3,921 daily records
+│   └── processed/                                 Derived deterministically; not stored
+├── figures/        Figures 1-4, publication resolution
+├── results/        RMSE / MAPE / R2 matrices, MCS, Diebold-Mariano, Wilcoxon
 ├── tables/         Table 3 (.docx and Markdown)
 ├── docs/           PeerJ submission checklist
 ├── AUTHORS.md      Authors, affiliations, contributions
 ├── CITATION.cff    Machine-readable citation metadata
-├── LICENSE         MIT — applies to source code
-├── LICENSE-DATA.md CC BY 4.0 — applies to data, figures, tables, results
+├── LICENSE         MIT - applies to source code
+├── LICENSE-DATA.md CC BY 4.0 - applies to data, figures, tables, results
 └── requirements.txt
 ```
 
-## Current contents and what is still missing
+Every directory carries its own README describing its contents in detail.
 
-This repository was populated from the
-`PeerJ_Computer_Science_Submission_Package` Google Drive folder. That folder
-contained **only** `Figures/` (four PNGs), `Tables/` (`Table_3.docx`) and an
-empty `Supplemental/` folder. Everything it held is here, unmodified:
-
-| Present | |
+| | |
 | :--- | :--- |
-| `figures/Figure_1.png` … `Figure_4.png` | Verbatim copies, with captions in [`figures/README.md`](figures/README.md) |
-| `tables/Table_3.docx` | Verbatim copy, plus a Markdown rendering |
+| **Data** | [`data/raw/`](data/README.md) — daily Bitcoin OHLCV, 2014-09-17 to 2025-06-11, 3,921 records, no missing values or duplicate dates. |
+| **Code** | [`code/`](code/README.md) — the notebook that produced the published results (Google Colab, TensorFlow 2.20.0, T4 GPU), committed with its cell outputs intact. |
+| **Results** | [`results/`](results/README.md) — the result tables behind Table 3 and Figures 2–4, as CSV. |
+| **Figures** | [`figures/`](figures/README.md) — Figures 1–4 exactly as supplied in the submission package. |
+| **Tables** | [`tables/`](tables/) — `Table_3.docx` plus a Markdown rendering. |
 
-**Not yet present**, and required by PeerJ before the article can be published:
+### Verification
 
-| Missing | Where it goes |
+`results/RMSE_mean_matrix.csv` was checked against
+[`tables/Table_3.md`](tables/Table_3.md) value by value: **75 of the 76 values
+agree exactly**. The single exception is a rounding slip in the manuscript —
+STL-ARIMA-LSTM at *h* = 14 computes to 3,249.4973, which rounds to 3,249, but
+Table 3 prints 3,250. The Model Confidence Sets in `results/MCS_h*.csv` reproduce
+the † markers of Table 3 exactly at all four horizons.
+
+### Still to add before submission
+
+| Item | Notes |
 | :--- | :--- |
-| Analysis code | [`code/`](code/README.md) |
-| Raw and processed data | [`data/`](data/README.md) |
-| Per-seed numerical results, MCS output, predictions | [`results/`](results/README.md) |
-| Tables 1, 2 and any further tables | `tables/` |
-| Supplemental files | `docs/` or a `supplemental/` folder |
-
-Each of those directories contains a README describing exactly what to place
-there. See [`docs/peerj-submission-checklist.md`](docs/peerj-submission-checklist.md)
-for the full list of journal requirements.
+| Tables 1, 2 and any others | Only Table 3 was present in the submission package. |
+| Per-seed metrics and test-period predictions | Written by the notebook to its Drive output folder during the run; see [`results/README.md`](results/README.md). |
+| Data provenance statement | Source and retrieval date of the raw series; see [`data/README.md`](data/README.md). |
+| Zenodo DOI | GitHub is not a permanent archive; see [`docs/peerj-submission-checklist.md`](docs/peerj-submission-checklist.md). |
 
 ## Reproducing the results
-
-Once the code is deposited:
 
 ```bash
 git clone https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting.git
 cd Decomposition-Ensembles-for-Bitcoin-Price-Forecasting
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-python code/run_all.py
+jupyter notebook code/decomposition_ensemble_experiments.ipynb
 ```
 
-The versions in [`requirements.txt`](requirements.txt) are currently minimum
-bounds inferred from the reported methods; they must be pinned to the exact
-versions used before submission.
+The notebook was written for Google Colab and reads from Google Drive. To run it
+against this repository, point `CONFIG['DATA_DIR']` at `data/raw/` and
+`CONFIG['OUT_DIR']` at `results/`, and skip the `drive.mount` cell.
+[`code/README.md`](code/README.md) documents the configuration in full.
+
+A complete run covers ten seeds × three architectures × three components × two
+decompositions and takes hours of GPU time. To read the published numbers without
+re-running anything, open the committed notebook — its outputs are intact — or
+the CSVs in [`results/`](results/README.md).
 
 ## Licence
 
