@@ -50,9 +50,10 @@ The submission package supplied only Figures 1–4 and Table 3. Before submittin
 confirm that every figure and table cited in the manuscript is present here:
 
 - [x] Figures 1–4 present.
-- [x] Table 3 present, and cross-checked against `results/RMSE_mean_matrix.csv`:
-      75 of 76 values agree exactly. Fix the one rounding slip in the manuscript —
-      STL-ARIMA-LSTM at *h* = 14 is 3,249, printed as 3,250.
-- [ ] Tables 1 and 2 (and any others) added.
+- [x] Tables 1–5 present as editable DOCX in PeerJ format, with Markdown
+      renderings alongside.
+- [x] Tables 3–5 cross-checked against `results/`: all 228 values and all 228 †
+      markers agree. One correction applied — STL-ARIMA-LSTM at *h* = 14 is
+      **3,249**, not 3,250; update the manuscript text to match.
 - [ ] Supplemental files added — the `Supplemental/` folder in the submission
       package was empty.

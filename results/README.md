@@ -23,14 +23,14 @@ random seeds (42–51). Model names follow the notebook's convention:
 
 ## Consistency with Table 3
 
-`RMSE_mean_matrix.csv` was checked value by value against
-[`../tables/Table_3.md`](../tables/Table_3.md): **75 of 76 values agree exactly**
-after rounding. The single discrepancy is a rounding slip in the manuscript —
-STL-ARIMA-LSTM at *h* = 14 computes to 3,249.4973, which rounds to **3,249**, but
-Table 3 prints **3,250**. Worth correcting in the manuscript.
+Tables 3, 4 and 5 were checked cell by cell against `RMSE_mean_matrix.csv`,
+`R2_mean_matrix.csv` and `MAPE_mean_matrix.csv`: **all 228 values agree exactly**
+after rounding, and **all 228 † markers** match the confidence sets in
+`MCS_h*.csv`.
 
-The MCS confidence sets also reproduce the † markers of Table 3 exactly at every
-horizon.
+One correction was applied to the table files: STL-ARIMA-LSTM at *h* = 14
+computes to 3,249.4973, which rounds to **3,249**, but earlier drafts printed
+**3,250**. The manuscript text needs the same correction.
 
 ## Not included
 

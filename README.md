@@ -76,22 +76,24 @@ Every directory carries its own README describing its contents in detail.
 | **Code** | [`code/`](code/README.md) — the notebook that produced the published results (Google Colab, TensorFlow 2.20.0, T4 GPU), committed with its cell outputs intact. |
 | **Results** | [`results/`](results/README.md) — the result tables behind Table 3 and Figures 2–4, as CSV. |
 | **Figures** | [`figures/`](figures/README.md) — Figures 1–4 exactly as supplied in the submission package. |
-| **Tables** | [`tables/`](tables/) — `Table_3.docx` plus a Markdown rendering. |
+| **Tables** | [`tables/`](tables/) — Tables 1–5 as editable DOCX (PeerJ format) plus Markdown renderings. |
 
 ### Verification
 
-`results/RMSE_mean_matrix.csv` was checked against
-[`tables/Table_3.md`](tables/Table_3.md) value by value: **75 of the 76 values
-agree exactly**. The single exception is a rounding slip in the manuscript —
-STL-ARIMA-LSTM at *h* = 14 computes to 3,249.4973, which rounds to 3,249, but
-Table 3 prints 3,250. The Model Confidence Sets in `results/MCS_h*.csv` reproduce
-the † markers of Table 3 exactly at all four horizons.
+Tables 3, 4 and 5 were checked cell by cell against `results/RMSE_mean_matrix.csv`,
+`R2_mean_matrix.csv` and `MAPE_mean_matrix.csv`: **all 228 values and all 228 †
+markers agree** with the computed results and with the Model Confidence Sets in
+`results/MCS_h*.csv`.
+
+One correction was applied while re-exporting the tables: STL-ARIMA-LSTM at
+*h* = 14 computes to 3,249.4973, which rounds to **3,249**, but earlier drafts of
+Table 3 printed **3,250**. The files here carry the corrected value — the
+manuscript text must be updated to match.
 
 ### Still to add before submission
 
 | Item | Notes |
 | :--- | :--- |
-| Tables 1, 2 and any others | Only Table 3 was present in the submission package. |
 | Per-seed metrics and test-period predictions | Written by the notebook to its Drive output folder during the run; see [`results/README.md`](results/README.md). |
 | Data provenance statement | Source and retrieval date of the raw series; see [`data/README.md`](data/README.md). |
 | Zenodo DOI | GitHub is not a permanent archive. Metadata is ready in [`.zenodo.json`](.zenodo.json); follow [`docs/zenodo-archiving.md`](docs/zenodo-archiving.md). |
