@@ -11,13 +11,13 @@ Hoa Tran Thai <sup>1,2</sup>, Thanh Manh Le <sup>2</sup>, Cuong H. Nguyen-Dinh <
 2. University of Sciences, Hue University, Hue, Viet Nam
 3. University of Finance and Marketing, Hue, Viet Nam
 
-\* Corresponding author: Cuong H. Nguyen-Dinh — ndhcuong@ufm.edu.vn
+\* Corresponding author: Cuong H. Nguyen-Dinh — cuongndh@ufm.edu.vn
 
 | Author | Email |
 | :--- | :--- |
 | Hoa Tran Thai | tranthaihoa@hueuni.edu.vn |
 | Thanh Manh Le | lmthanh@hueuni.edu.vn |
-| Cuong H. Nguyen-Dinh | ndhcuong@ufm.edu.vn |
+| Cuong H. Nguyen-Dinh | cuongndh@ufm.edu.vn |
 
 See [`AUTHORS.md`](AUTHORS.md) for full affiliations and the author
 contributions statement.
