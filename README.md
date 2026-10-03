@@ -5,7 +5,7 @@ Bitcoin Price Forecasting"**, submitted to *PeerJ Computer Science*.
 
 ## Authors
 
-Hoa Tran Thai <sup>1, Thanh Manh Le <sup>2</sup>, Cuong H. Nguyen-Dinh <sup>3,\*</sup>
+Hoa Tran Thai <sup>1</sup>, Thanh Manh Le <sup>2</sup>, Cuong H. Nguyen-Dinh <sup>3,\*</sup>
 
 1. University of Economics, Hue University, Hue, Viet Nam
 2. University of Sciences, Hue University, Hue, Viet Nam
