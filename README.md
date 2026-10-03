@@ -146,5 +146,5 @@ Availability statement.
 Citation metadata is in [`CITATION.cff`](CITATION.cff). Update it with the DOI,
 volume and page numbers once the article is published.
 
-> Tran Thai H, Manh Le T, Nguyen-Dinh CH. Decomposition Ensembles for Bitcoin
+> Hoa Tran Thai, Thanh Manh Le, Cuong H. Nguyen-Dinh. Decomposition Ensembles for Bitcoin
 > Price Forecasting. Submitted to *PeerJ Computer Science*.
