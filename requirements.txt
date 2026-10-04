@@ -1,19 +1,21 @@
-# Python dependencies for the decomposition-ensemble experiments.
+# Python dependencies (Python >= 3.10).
 #
-# The experiments were run on Google Colab with a T4 GPU. TensorFlow 2.20.0 is
-# the version the committed notebook recorded in its own output; the remaining
-# packages were supplied by the Colab image or installed by the notebook's first
-# cell, so their exact versions were not captured. Pin them to the versions in
-# the run environment before submission (`pip freeze`).
+# Published run: Google Colab, Python 3.13, TensorFlow 2.20.0, NVIDIA T4 GPU.
+# The other packages came from the Colab image (or were installed by the
+# notebook's first cell), so only lower bounds are given. The repository
+# workflow was also tested on Linux/CPU with Python 3.11, numpy 2.4.6,
+# pandas 3.0.6, scipy 1.17.1, statsmodels 0.15.0, pmdarima 2.1.1, arch 8.0.0,
+# matplotlib 3.11.2 and TensorFlow 2.20.0.
 
-# Deep component learners: TCN, N-BEATS, GRU (tf.keras)
+# Deep component learners: TCN, N-BEATS, GRU, LSTM (tf.keras).
+# CPU-only alternative: tensorflow-cpu==2.20.0
 tensorflow==2.20.0
 
-# STL / robust STL decomposition and ARIMA
+# STL / robust STL decomposition, ARIMA, ADF and KPSS tests
 statsmodels>=0.14
+# ARIMA order selection (auto_arima)
 pmdarima>=2.0
-
-# Model Confidence Set and bootstrap inference
+# Model Confidence Set
 arch>=6.0
 
 numpy>=1.26
@@ -21,6 +23,11 @@ pandas>=2.0
 scipy>=1.11
 matplotlib>=3.7
 
-# Only needed by code/extract_notebook_results.py (parses the notebook's
-# rendered HTML tables); not required to run the experiments.
+# Running the notebook (interactively or headless with nbconvert)
+jupyter
+nbconvert
+
+# Only for code/verify_tables.py (reads tables/*.docx) and
+# code/extract_notebook_results.py (parses the notebook's HTML tables)
+python-docx>=1.0
 lxml>=4.9

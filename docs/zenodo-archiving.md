@@ -15,7 +15,7 @@ before that is invisible to Zenodo and has to be deleted and recreated.
 | Requirement | Status |
 | :--- | :--- |
 | Repository is public | Yes — Zenodo cannot see private repositories. |
-| An open licence is present | Yes — MIT (`LICENSE`) for code, CC BY 4.0 (`LICENSE-DATA.md`) for data, figures and tables. |
+| An open licence is present | Yes — MIT (`LICENSE`) for code, CC BY 4.0 (`LICENSE-DATA.md`) for processed data, figures, tables and results. |
 | Deposit metadata is in the repository | Yes — [`../.zenodo.json`](../.zenodo.json): title, all three authors with affiliations, description, keywords and licence. Zenodo reads this file at release time instead of guessing from the repository. |
 | Archiving happens from the default branch | Yes — `claude/adoring-dijkstra-5l61zx` is the repository's default branch. |
 
@@ -93,5 +93,6 @@ link printed in the article keeps working.
 - [ ] Author name order in `.zenodo.json` verified. The entries use
       `"Family, Given"` form matching the manuscript byline; confirm that the
       family names are split correctly.
-- [ ] Tables 1 and 2 and any remaining supplemental files added, so the archived
-      snapshot is the complete deposit.
+- [ ] The working branch has been merged into the default branch, so the
+      archived snapshot contains the processed data, Tables 1–7 and Figures 1–5.
+- [ ] `python code/verify_tables.py` passes on the default branch.

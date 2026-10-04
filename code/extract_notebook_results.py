@@ -1,15 +1,18 @@
 """Extract the machine-readable result tables from the experiment notebook.
 
-The notebook `decomposition_ensemble_experiments.ipynb` writes its result tables
-to a Google Drive folder while it runs, but it also stores every table in its own
-cell outputs. This script reads those stored outputs and writes them to
-`results/` as CSV, so the numbers behind the manuscript are available without
+When it runs, `decomposition_ensemble_experiments.ipynb` writes its result tables
+to `OUT_DIR`, and it also displays every table in its own cell outputs. The
+committed notebook keeps the outputs of the run that produced the published
+results, so this script reads those stored outputs and writes them to
+`results/` as CSV. The published numbers are therefore available without
 re-running the (GPU-hours long) experiment.
 
-Only tables that pandas rendered in full are exported. Two tables — the per-seed
-aggregate (`agg`) and the seed-averaged metrics (`savg`), both 76 rows — were
-truncated by pandas' display limit when the notebook was saved, so they cannot be
-recovered here; re-run the notebook to regenerate them.
+Only tables that were displayed in full are exported. The per-model aggregate
+(`aggregate_mean_std.csv`) and the seed-averaged metrics
+(`seed_averaged_metrics.csv`), both 76 rows, were truncated by the pandas
+display limit, so they cannot be recovered here; re-run the notebook to
+regenerate them. The Wilcoxon table is exported as the 30-row excerpt that the
+notebook displays (h = 1 and 28 for the first three proposed models).
 
 Usage:
     python code/extract_notebook_results.py
@@ -38,7 +41,7 @@ EXPORTS = {
     (23, 3): "MCS_h7.csv",
     (23, 5): "MCS_h14.csv",
     (23, 7): "MCS_h28.csv",
-    (25, 1): "wilcoxon_seed.csv",
+    (25, 1): "wilcoxon_seed_excerpt.csv",
     (27, 0): "best_per_horizon.csv",
     (27, 2): "overall_rank.csv",
 }

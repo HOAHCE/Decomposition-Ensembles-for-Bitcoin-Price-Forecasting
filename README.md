@@ -1,150 +1,330 @@
-# Decomposition Ensembles for Bitcoin Price Forecasting
+# Validation-Guided Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting
 
-Data, code and results supporting the manuscript **"Decomposition Ensembles for
-Bitcoin Price Forecasting"**, submitted to *PeerJ Computer Science*.
+Code, processed data and results supporting the article *Validation-Guided
+Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting*,
+submitted to **PeerJ Computer Science**.
 
-## Authors
-
-Hoa Tran Thai <sup>1</sup>, Thanh Manh Le <sup>2</sup>, Cuong H. Nguyen-Dinh <sup>3,\*</sup>
+**Authors:** Hoa Tran Thai<sup>1,2</sup>, Thanh Manh Le<sup>2</sup>,
+Cuong H. Nguyen-Dinh<sup>3,\*</sup>
 
 1. University of Economics, Hue University, Hue, Viet Nam
 2. University of Sciences, Hue University, Hue, Viet Nam
 3. University of Finance and Marketing, Hue, Viet Nam
 
-\* Corresponding author: Cuong H. Nguyen-Dinh — cuongndh@ufm.edu.vn
+\* Corresponding author: Cuong H. Nguyen-Dinh (ndhcuong@ufm.edu.vn)
 
-| Author | Email |
+## Contents
+
+1. [Description](#1-description)
+2. [Dataset information](#2-dataset-information)
+3. [Code information](#3-code-information)
+4. [Usage instructions](#4-usage-instructions)
+5. [Requirements](#5-requirements)
+6. [Methodology](#6-methodology)
+7. [Results](#7-results)
+8. [Repository structure](#8-repository-structure)
+9. [Citations](#9-citations)
+10. [License and contribution guidelines](#10-license-and-contribution-guidelines)
+
+## 1. Description
+
+This repository implements a modular machine-learning framework for forecasting
+the daily Bitcoin closing price 1, 7, 14 and 28 days ahead. The framework:
+
+1. log-transforms the price and decomposes it into **trend, seasonal and
+   remainder** components with seasonal-trend decomposition based on Loess,
+   using standard (**STL**) or robust (**rSTL**) fitting and a 30-day period;
+2. forecasts each component with a library of deep learners — **temporal
+   convolutional network (TCN), N-BEATS and gated recurrent unit (GRU)** —
+   through a common **direct multi-horizon** interface that maps one 60-day input
+   window to the complete 28-day forecast vector, so no prediction is fed back
+   into the input;
+3. combines component forecasts with three **validation-guided** rules: **Auto**
+   (per component, the learner with the lowest validation loss), **EnsAvg**
+   (equal-weight average of the architectures) and **EnsWgt**
+   (inverse-validation-loss weights);
+4. compares 19 specifications, including ARIMA, a random walk with drift,
+   matched undecomposed TCN/N-BEATS/GRU models and classical STL-ARIMA-LSTM
+   hybrids, over ten random seeds on a 365-day test period, with Diebold–Mariano
+   tests and the Model Confidence Set.
+
+Decomposition-based ensembles led at all four horizons. STL-Auto achieved the
+lowest root mean squared error (RMSE) at one day (1,821 USD) and at 28 days
+(4,219 USD, R² = 0.938), where it reduced RMSE by 61.6% relative to ARIMA.
+
+Everything needed to reproduce the article's numbers is included: the processed
+data, the experiment notebook (with the outputs of the published run), the
+extracted result tables, scripts that rebuild Table 1, check Tables 1 and 3–7
+and redraw Figures 2–5, and the tables and figures themselves.
+
+## 2. Dataset information
+
+| Property | Value |
 | :--- | :--- |
-| Hoa Tran Thai | tranthaihoa@hueuni.edu.vn |
-| Thanh Manh Le | lmthanh@hueuni.edu.vn |
-| Cuong H. Nguyen-Dinh | cuongndh@ufm.edu.vn |
+| Source | Yahoo Finance, ticker `BTC-USD` (daily bars) |
+| Period | 17 September 2014 – 11 June 2025 |
+| Observations | 3,921 consecutive days; no missing values or duplicate dates |
+| Variables | Open, High, Low, Close (USD) and Volume; **Close is the forecast target** |
+| Split | Development 2014-09-17 to 2024-06-11 (3,556 days; its final 10% of training windows is the validation block) · Test 2024-06-12 to 2025-06-11 (365 days) |
 
-See [`AUTHORS.md`](AUTHORS.md) for full affiliations and the author
-contributions statement.
+Only the **processed** data are stored, in [`data/processed/`](data/processed):
 
-## Overview
-
-The study forecasts the daily Bitcoin price by decomposing the series before
-learning, rather than fitting a single model to the raw series. Daily OHLCV data
-covering 2014–2025 is split into chronological development, validation and test
-blocks, then decomposed with **STL** or **robust STL (rSTL)** at a period of 30
-days. Separate deep learners — **TCN**, **N-BEATS** and **GRU** — are fitted to
-the trend, seasonal and remainder components. Their forecasts are combined by a
-validation-guided rule (`Auto` selection, `EnsAvg` simple averaging, `EnsWgt`
-weighted averaging), the components are reconstructed, the log transform is
-inverted, and the result is evaluated at horizons of **1, 7, 14 and 28 days**
-using RMSE, MAPE, *R*² and directional accuracy.
-
-The pipeline is summarised in [`figures/Figure_1.png`](figures/Figure_1.png).
-
-### Headline result
-
-Decomposition is what separates the two groups of models. At *h* = 28 days the
-non-decomposed benchmarks reach an RMSE of roughly 10,500–11,800 USD, while
-every STL- and rSTL-based model stays between about 4,200 and 6,100 USD; the
-proposed ensembles are the strongest of these (STL-Auto: 4,219 USD). Metrics are
-means over ten random seeds on a 365-day test period, with Model Confidence Set
-membership reported at alpha = 0.10. Full numbers:
-[`tables/Table_3.md`](tables/Table_3.md).
-
-## Repository structure
-
-```
-.
-├── code/
-│   ├── decomposition_ensemble_experiments.ipynb   Full experiment, outputs intact
-│   └── extract_notebook_results.py                Notebook outputs -> results/*.csv
-├── data/
-│   ├── raw/BTC_USD_daily_2014-09-17_2025-06-11.csv   3,921 daily records
-│   └── processed/                                 Derived deterministically; not stored
-├── figures/        Figures 1-4, publication resolution
-├── results/        RMSE / MAPE / R2 matrices, MCS, Diebold-Mariano, Wilcoxon
-├── tables/         Table 3 (.docx and Markdown)
-├── docs/           PeerJ submission checklist
-├── AUTHORS.md      Authors, affiliations, contributions
-├── CITATION.cff    Machine-readable citation metadata
-├── LICENSE         MIT - applies to source code
-├── LICENSE-DATA.md CC BY 4.0 - applies to data, figures, tables, results
-└── requirements.txt
-```
-
-Every directory carries its own README describing its contents in detail.
-
-| | |
+| File | Contents |
 | :--- | :--- |
-| **Data** | [`data/raw/`](data/README.md) — daily Bitcoin OHLCV, 2014-09-17 to 2025-06-11, 3,921 records, no missing values or duplicate dates. |
-| **Code** | [`code/`](code/README.md) — the notebook that produced the published results (Google Colab, TensorFlow 2.20.0, T4 GPU), committed with its cell outputs intact. |
-| **Results** | [`results/`](results/README.md) — the result tables behind Table 3 and Figures 2–4, as CSV. |
-| **Figures** | [`figures/`](figures/README.md) — Figures 1–4 exactly as supplied in the submission package. |
-| **Tables** | [`tables/`](tables/) — Tables 1–5 as editable DOCX (PeerJ format) plus Markdown renderings. |
+| [`BTC_USD_daily_OHLCV_processed.csv`](data/processed/BTC_USD_daily_OHLCV_processed.csv) | Cleaned daily OHLCV series with a `Sample` column (`development` / `test`). Input file of the experiment. |
+| [`BTC_USD_daily_log_STL_components.csv`](data/processed/BTC_USD_daily_log_STL_components.csv) | Log-transformed OHLCV inputs and the trend, seasonal and remainder components of ln(Close) from STL and rSTL (period 30). |
 
-### Verification
+The price level and log price are non-stationary (ADF p = 0.973 and 0.815),
+whereas daily log returns are stationary with excess kurtosis 11.44 (Table 1).
+The full data dictionary, processing steps and a loading example are in
+[`data/README.md`](data/README.md).
 
-Tables 3, 4 and 5 were checked cell by cell against `results/RMSE_mean_matrix.csv`,
-`R2_mean_matrix.csv` and `MAPE_mean_matrix.csv`: **all 228 values and all 228 †
-markers agree** with the computed results and with the Model Confidence Sets in
-`results/MCS_h*.csv`.
+## 3. Code information
 
-One correction was applied while re-exporting the tables: STL-ARIMA-LSTM at
-*h* = 14 computes to 3,249.4973, which rounds to **3,249**, but earlier drafts of
-Table 3 printed **3,250**. The files here carry the corrected value — the
-manuscript text must be updated to match.
+All code is Python. Scripts are run from the repository root.
 
-### Still to add before submission
-
-| Item | Notes |
+| File | Purpose |
 | :--- | :--- |
-| Per-seed metrics and test-period predictions | Written by the notebook to its Drive output folder during the run; see [`results/README.md`](results/README.md). |
-| Data provenance statement | Source and retrieval date of the raw series; see [`data/README.md`](data/README.md). |
-| Zenodo DOI | GitHub is not a permanent archive. Metadata is ready in [`.zenodo.json`](.zenodo.json); follow [`docs/zenodo-archiving.md`](docs/zenodo-archiving.md). |
+| [`code/decomposition_ensemble_experiments.ipynb`](code/decomposition_ensemble_experiments.ipynb) | Main experiment: decomposition, direct multi-horizon learners, ensembles, benchmarks, metrics, Diebold–Mariano tests, Model Confidence Set and Wilcoxon tests (Tables 3–7; data for Figures 2–5). Saved with the outputs of the published run. |
+| [`code/prepare_data.py`](code/prepare_data.py) | Builds the processed files from a raw `BTC-USD` download, or verifies the committed ones (`--check`). |
+| [`code/descriptive_statistics.py`](code/descriptive_statistics.py) | Reproduces Table 1. |
+| [`code/extract_notebook_results.py`](code/extract_notebook_results.py) | Exports the result tables stored in the notebook outputs to `results/*.csv`. |
+| [`code/verify_tables.py`](code/verify_tables.py) | Checks every value of Tables 1 and 3–7 against the computed results. |
+| [`code/make_figures.py`](code/make_figures.py) | Redraws Figures 2–5 from the result CSVs. |
 
-## Reproducing the results
+Main functions in the notebook: `decompose` (STL/rSTL), `build_model` (TCN,
+N-BEATS, GRU, LSTM, MLP, Transformer), `deep_direct` (direct multi-horizon
+training and forecasting for one series), `arima_roll` and `rw` (benchmarks),
+`metrics_full` (RMSE, MAE, MAPE, sMAPE, R², Theil's U, directional accuracy) and
+`dm_test` (Diebold–Mariano with Harvey–Leybourne–Newbold correction). A
+section-by-section guide and the configuration options are in
+[`code/README.md`](code/README.md).
+
+## 4. Usage instructions
+
+### 4.1 Installation
 
 ```bash
 git clone https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting.git
 cd Decomposition-Ensembles-for-Bitcoin-Price-Forecasting
-python -m venv .venv && source .venv/bin/activate
+python -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-jupyter notebook code/decomposition_ensemble_experiments.ipynb
 ```
 
-The notebook was written for Google Colab and reads from Google Drive. To run it
-against this repository, point `CONFIG['DATA_DIR']` at `data/raw/` and
-`CONFIG['OUT_DIR']` at `results/`, and skip the `drive.mount` cell.
-[`code/README.md`](code/README.md) documents the configuration in full.
+### 4.2 Check the published numbers (seconds, no GPU)
 
-A complete run covers ten seeds × three architectures × three components × two
-decompositions and takes hours of GPU time. To read the published numbers without
-re-running anything, open the committed notebook — its outputs are intact — or
-the CSVs in [`results/`](results/README.md).
+```bash
+python code/prepare_data.py --check     # processed data are consistent with the cleaning/decomposition code
+python code/descriptive_statistics.py   # Table 1
+python code/verify_tables.py            # Tables 1 and 3-7 vs. computed results (305 checks)
+python code/make_figures.py             # redraw Figures 2-5 into outputs/figures/
+```
 
-## Archiving and DOI
+### 4.3 Quick end-to-end test of the experiment (CPU, about 25 minutes)
 
-The repository is set up to be archived on Zenodo, which stores a permanent
-snapshot and issues a DOI — GitHub alone does not satisfy the journal's
-requirement for a permanent archive. The deposit metadata (title, all three
-authors with affiliations, description, keywords, licence) is already in
-[`.zenodo.json`](.zenodo.json), so Zenodo uses it rather than guessing.
+```bash
+QUICK_MODE=1 jupyter nbconvert --to notebook --execute \
+    code/decomposition_ensemble_experiments.ipynb --output-dir outputs --output quick_test.ipynb
+```
 
-The archiving itself has not been done yet: it needs the repository owner to log
-in to Zenodo and switch the repository on before a release is created.
-[`docs/zenodo-archiving.md`](docs/zenodo-archiving.md) gives the exact steps and
-explains why that order matters.
+`QUICK_MODE` uses a 120-day test period, 15 epochs, two architectures and two
+seeds; it took about 25 minutes on a 4-core CPU. It confirms that the full
+pipeline runs and writes every output file to `outputs/`; its numbers are
+**not** the published ones.
 
-Once the DOI exists, add its badge here, record the **concept DOI** in
-[`CITATION.cff`](CITATION.cff), and cite it in the manuscript's Data
-Availability statement.
+### 4.4 Full replication (GPU recommended)
 
-## Licence
+Open `code/decomposition_ensemble_experiments.ipynb` in Jupyter and run all
+cells, or run it headless:
 
-- **Source code** — [MIT](LICENSE).
-- **Data, figures, tables and results** — [CC BY 4.0](LICENSE-DATA.md), the
-  licence PeerJ applies to published content.
+```bash
+jupyter nbconvert --to notebook --execute code/decomposition_ensemble_experiments.ipynb \
+    --output-dir outputs --output full_run.ipynb --ExecutePreprocessor.timeout=-1
+python code/make_figures.py --results outputs --out outputs/figures
+```
 
-## How to cite
+The notebook reads `data/processed/BTC_USD_daily_OHLCV_processed.csv` and writes
+all result files to `outputs/`, leaving the published `results/` untouched. The
+published run took about 1.5 hours on an NVIDIA T4 GPU (5,066 s for the ten-seed
+loop).
 
-Citation metadata is in [`CITATION.cff`](CITATION.cff). Update it with the DOI,
-volume and page numbers once the article is published.
+**Google Colab.** Choose a GPU runtime and run in the first cell:
 
-> Hoa Tran Thai, Thanh Manh Le, Cuong H. Nguyen-Dinh. Decomposition Ensembles for Bitcoin
-> Price Forecasting. Submitted to *PeerJ Computer Science*.
+```python
+!git clone https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting.git
+%cd Decomposition-Ensembles-for-Bitcoin-Price-Forecasting
+```
+
+then open `code/decomposition_ensemble_experiments.ipynb` (or upload it) and run
+all cells; Section 0 installs `pmdarima` and `arch` automatically.
+
+**Expected agreement.** ARIMA and the random walk are deterministic and
+reproduce the published RMSE and MAPE exactly from `data/processed/`. The deep models are seeded (seeds 42–51), but GPU kernels and
+library versions introduce small numerical differences, so re-run values of the
+deep and ensemble models can differ slightly from the published ones while the
+rankings and conclusions are expected to hold.
+
+### 4.5 Loading the data and results
+
+```python
+import pandas as pd
+
+ohlcv = pd.read_csv("data/processed/BTC_USD_daily_OHLCV_processed.csv",
+                    parse_dates=["Date"], index_col="Date")
+rmse = pd.read_csv("results/RMSE_mean_matrix.csv", index_col="Model")   # Table 3
+print(rmse.loc[["STL-Auto", "ARIMA"]])
+```
+
+## 5. Requirements
+
+| Component | Version |
+| :--- | :--- |
+| Python | 3.10 or later (published run: 3.13) |
+| TensorFlow / Keras | 2.20.0 (TCN, N-BEATS, GRU, LSTM) |
+| statsmodels | ≥ 0.14 (STL, ARIMA, ADF, KPSS) |
+| pmdarima | ≥ 2.0 (ARIMA order selection) |
+| arch | ≥ 6.0 (Model Confidence Set) |
+| numpy, pandas, scipy, matplotlib | numpy ≥ 1.26, pandas ≥ 2.0, scipy ≥ 1.11, matplotlib ≥ 3.7 |
+| jupyter, nbconvert | to run the notebook |
+| python-docx, lxml | only for `verify_tables.py` and `extract_notebook_results.py` |
+
+All packages are listed in [`requirements.txt`](requirements.txt).
+
+**Computing infrastructure.** The published results were produced on Google
+Colab (Linux, Python 3.13, TensorFlow 2.20.0, one NVIDIA T4 GPU with 16 GB).
+The repository workflow (Sections 4.2–4.3) was also tested on Linux with
+Python 3.11 and CPU-only TensorFlow 2.20.0. A GPU is recommended for the full
+run; the quick test runs on a CPU.
+
+## 6. Methodology
+
+1. **Data preparation.** Daily OHLCV data are cleaned (chronological order, no
+   duplicates, positive prices), the prices are log-transformed and volume is
+   transformed with ln(1 + x). OHLCV variables enter the models only as lagged
+   values available at the forecast origin.
+2. **Chronological split.** The final 365 days form the test period. The
+   preceding 3,556 days form the development sample, whose final block (the
+   last 10% of training windows) is used for early stopping, component-model
+   selection and ensemble weighting. Scaling parameters are estimated on the
+   development data only.
+3. **Decomposition.** ln(Close) = trend + seasonal + remainder, using STL or
+   robust STL (rSTL) with a 30-day period; both reconstruct the log series to
+   within 1.8 × 10⁻¹⁵.
+4. **Direct multi-horizon component forecasting.** Each learner receives a
+   60-day window of one component plus lagged OHLCV features and outputs the
+   28-step vector at once. The non-stationary trend (and the undecomposed log
+   price) is modelled as h-step changes and reconstructed from the value at the
+   origin; seasonal and remainder components are modelled in levels. Learners:
+   TCN with dilations 1, 2, 4, 8; N-BEATS with three doubly residual blocks; GRU
+   with two recurrent layers (64 units, Adam, learning rate 0.001, batch 32, up
+   to 100 epochs, early-stopping patience 12).
+5. **Validation-guided combination.** *Auto* selects, for each component, the
+   architecture with the lowest validation loss over the full output vector and
+   sums the selected component forecasts. *EnsAvg* averages the reconstructed
+   log-price forecasts of the three architectures with equal weights; *EnsWgt*
+   weights them by inverse validation loss. The price forecast is
+   exp(trend + seasonal + remainder).
+6. **Benchmarks.** ARIMA (order chosen by `auto_arima` on the development data:
+   (0, 1, 0)), random walk with drift, TCN/N-BEATS/GRU fitted directly to the
+   undecomposed log price with the same windows, features, output interface,
+   training budget and seeds, and STL-/rSTL-ARIMA-LSTM hybrids (ARIMA for the
+   trend, LSTM for seasonal and remainder components).
+7. **Evaluation.** RMSE (primary), MAPE, R² and directional accuracy at
+   h = 1, 7, 14 and 28 days, using only forecast origins whose targets lie in the
+   test period. Every stochastic model is trained with seeds 42–51; results are
+   reported as seed means (± SD).
+8. **Statistical inference.** Diebold–Mariano tests with the
+   Harvey–Leybourne–Newbold correction compare the seed-averaged STL-Auto
+   forecast with each undecomposed benchmark; the Model Confidence Set
+   (α = 0.10) is computed on the seed-averaged squared errors; one-sided Wilcoxon
+   signed-rank tests across seeds provide supporting evidence.
+
+The experimental configuration is summarised in [Table 2](tables/Table_2.md).
+
+## 7. Results
+
+| Output | Location |
+| :--- | :--- |
+| Tables 1–7 (PeerJ-format `.docx` + Markdown) | [`tables/`](tables/README.md) |
+| Figures 1–5 | [`figures/`](figures/README.md) |
+| Result matrices and test statistics (CSV) | [`results/`](results/README.md) |
+
+Leading model at each horizon ([Table 6](tables/Table_6.md)):
+
+| h (days) | Leading model | RMSE (USD), mean ± SD | R² | MAPE (%) | DA (%) | In MCS |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| 1 | STL-Auto | 1,821 ± 129 | 0.9888 | 1.79 | 64.7 | Yes |
+| 7 | rSTL-EnsAvg | 2,359 ± 121 | 0.9814 | 2.35 | 83.7 | No |
+| 14 | STL-EnsAvg | 2,153 ± 102 | 0.9845 | 2.13 | 90.9 | No |
+| 28 | STL-Auto | 4,219 ± 420 | 0.9378 | 3.85 | 88.3 | Yes |
+
+## 8. Repository structure
+
+```
+.
+├── README.md                      This file
+├── code/
+│   ├── decomposition_ensemble_experiments.ipynb   Main experiment (outputs of the published run)
+│   ├── prepare_data.py                            Raw download -> data/processed/ (or --check)
+│   ├── descriptive_statistics.py                  Table 1
+│   ├── extract_notebook_results.py                Notebook outputs -> results/*.csv
+│   ├── verify_tables.py                           Tables 1, 3-7 vs. computed results
+│   ├── make_figures.py                            Figures 2-5 from results/*.csv
+│   └── README.md
+├── data/
+│   ├── processed/
+│   │   ├── BTC_USD_daily_OHLCV_processed.csv      Cleaned OHLCV + sample split
+│   │   └── BTC_USD_daily_log_STL_components.csv   Log inputs + STL/rSTL components
+│   └── README.md                                  Data dictionary
+├── results/                       Result CSVs behind Tables 1, 3-7 and Figures 2-5
+├── tables/                        Tables 1-7 (.docx and .md)
+├── figures/                       Figures 1-5 (.png)
+├── docs/zenodo-archiving.md       How to archive a release on Zenodo (DOI)
+├── requirements.txt               Python dependencies
+├── CITATION.cff                   Citation metadata
+├── AUTHORS.md                     Authors and affiliations
+├── LICENSE                        MIT (code)
+└── LICENSE-DATA.md                CC BY 4.0 (data, tables, figures, results)
+```
+
+Running the notebook or `make_figures.py` creates an `outputs/` folder, which is
+not tracked by Git.
+
+## 9. Citations
+
+If you use this code or data, please cite the article (citation details will be
+updated on publication):
+
+> Hoa Tran Thai, Thanh Manh Le, Cuong H. Nguyen-Dinh. Validation-Guided
+> Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting.
+> *PeerJ Computer Science* (submitted).
+
+and the repository: <https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting>.
+Machine-readable metadata are in [`CITATION.cff`](CITATION.cff).
+
+Methods implemented in this repository:
+
+- Ben Taieb S, Bontempi G, Atiya AF, Sorjamaa A. 2012. A review and comparison of strategies for multi-step ahead time series forecasting based on the NN5 forecasting competition. *Expert Systems with Applications* 39:7067–7083. https://doi.org/10.1016/j.eswa.2012.01.039
+- Diebold FX, Mariano RS. 1995. Comparing predictive accuracy. *Journal of Business & Economic Statistics* 13:253–263. https://doi.org/10.1080/07350015.1995.10524599
+- Hansen PR, Lunde A, Nason JM. 2011. The model confidence set. *Econometrica* 79:453–497. https://doi.org/10.3982/ECTA5771
+- Harvey D, Leybourne S, Newbold P. 1997. Testing the equality of prediction mean squared errors. *International Journal of Forecasting* 13:281–291. https://doi.org/10.1016/S0169-2070(96)00719-4
+
+Data source: Yahoo Finance, `BTC-USD` daily prices.
+
+## 10. License and contribution guidelines
+
+**License.** Source code is released under the [MIT License](LICENSE). The
+processed data, tables, figures and result files are released under the
+[Creative Commons Attribution 4.0 International License](LICENSE-DATA.md)
+(CC BY 4.0).
+
+**Contributions.** Questions, bug reports and reproduction problems are welcome
+as [GitHub issues](https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting/issues).
+When reporting a reproduction difference, please include your operating system,
+Python and package versions (`pip freeze`), hardware (CPU/GPU) and the affected
+table or file. Pull requests that fix bugs or improve documentation are welcome;
+please keep the published `results/`, `tables/` and `figures/` unchanged so
+that they continue to match the article, and describe any change that affects
+the numbers. For other enquiries, contact the corresponding author,
+Cuong H. Nguyen-Dinh (ndhcuong@ufm.edu.vn).

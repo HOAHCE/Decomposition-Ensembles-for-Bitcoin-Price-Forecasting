@@ -1,48 +1,68 @@
 # Results
 
-Result tables from the run that produced Table 3 and Figures 2–4 of the
-manuscript. They were extracted from the stored cell outputs of
-[`../code/decomposition_ensemble_experiments.ipynb`](../code/decomposition_ensemble_experiments.ipynb)
-by [`../code/extract_notebook_results.py`](../code/extract_notebook_results.py),
-and carry the same file names the notebook itself writes when it runs.
+Machine-readable results behind Tables 1 and 3–7 and Figures 2–5. All forecast
+metrics are computed over the 365-day test period (2024-06-12 to 2025-06-11).
+Seed statistics use ten random seeds (42–51).
 
-All values are computed over the 365-day test period and averaged over ten
-random seeds (42–51). Model names follow the notebook's convention:
-`RobustSTL-…` is the manuscript's `rSTL-…`, and `NBEATS` is `N-BEATS`.
+The files except `descriptive_statistics.csv` were exported from the stored
+outputs of the published notebook run by
+[`../code/extract_notebook_results.py`](../code/extract_notebook_results.py).
+Because they come from the notebook's displayed tables, values carry the four
+decimal places shown there. A fresh run of the notebook writes the same files, at
+full precision, to `outputs/`.
 
-| File | Contents |
+Model names follow the code: `RobustSTL-…` is the article's `rSTL-…`, `NBEATS`
+is `N-BEATS`, and `TCN(direct)` is `TCN (direct)`.
+
+| File | Contents | Used for |
+| :--- | :--- | :--- |
+| `descriptive_statistics.csv` | Mean, SD, min, max, skewness, excess kurtosis, ADF and KPSS p-values of Close, ln(Close) and the log return (written by `code/descriptive_statistics.py`). | Table 1 |
+| `RMSE_mean_matrix.csv` | Mean RMSE (USD) across seeds; 19 models × 4 horizons. | Table 3, Figures 3 and 5 |
+| `R2_mean_matrix.csv` | Mean R² across seeds; 19 models × 4 horizons. | Table 4, Figure 2 |
+| `MAPE_mean_matrix.csv` | Mean MAPE (%) across seeds; 19 models × 4 horizons. | Table 5, Figure 4 |
+| `MCS_h1.csv`, `MCS_h7.csv`, `MCS_h14.csv`, `MCS_h28.csv` | Model Confidence Set p-values per horizon, from the squared errors of the seed-averaged forecasts. Models with p ≥ 0.10 belong to the confidence set. | † markers in Tables 3–5; Table 6 |
+| `best_per_horizon.csv` | Leading model per horizon (lowest mean RMSE) with RMSE mean ± SD, R², MAPE, DA, MCS membership and the Wilcoxon test against the strongest benchmark. | Table 6 |
+| `DM_seedavg.csv` | Diebold–Mariano tests (Harvey–Leybourne–Newbold correction) of STL-Auto against each undecomposed benchmark, on seed-averaged forecasts. | Table 7 |
+| `wilcoxon_seed_excerpt.csv` | One-sided Wilcoxon signed-rank tests across seeds, proposed vs. benchmark: the 30 rows displayed in the notebook (STL-TCN, STL-NBEATS and STL-GRU at h = 1 and 28). Across all 280 comparisons, 85% are significant at p < 0.05. | Supporting evidence |
+| `overall_rank.csv` | Average rank by RMSE across the four horizons (scale-free), top eight models. | Supporting evidence |
+
+## Column dictionary
+
+| Column | Meaning |
 | :--- | :--- |
-| `RMSE_mean_matrix.csv` | Mean RMSE (USD), 19 models × 4 horizons. **This is the source of Table 3.** |
-| `MAPE_mean_matrix.csv` | Mean MAPE (%), 19 models × 4 horizons. Source of Figure 4. |
-| `R2_mean_matrix.csv` | Mean *R*², 19 models × 4 horizons. Source of Figure 2. |
-| `MCS_h1.csv`, `MCS_h7.csv`, `MCS_h14.csv`, `MCS_h28.csv` | Model Confidence Set *p*-values per horizon (alpha = 0.10). Models with *p* ≥ 0.10 are in the confidence set and carry the † marker in Table 3. |
-| `DM_seedavg.csv` | Diebold–Mariano tests of the best proposed model against each baseline, on seed-averaged forecasts. |
-| `wilcoxon_seed.csv` | Across-seed Wilcoxon / *t*-tests, proposed models against baselines (30 comparisons; 85% significant at *p* < 0.05). |
-| `best_per_horizon.csv` | Winning model at each horizon, with RMSE (mean ± std), *R*², MAPE, DA, MCS membership and the Wilcoxon *p*-value against the strongest baseline. |
-| `overall_rank.csv` | Scale-free average rank by RMSE across horizons, top 8 models. |
+| `Model` / `Model name` | Model specification (code naming, see above) |
+| `1`, `7`, `14`, `28` | Forecast horizon h in days |
+| `Pvalue` | MCS p-value |
+| `h` | Forecast horizon (days) |
+| `Leader` | Model with the lowest mean RMSE at that horizon |
+| `RMSE` | Mean ± standard deviation of RMSE across seeds (USD) |
+| `R2`, `MAPE`, `DA` | Mean R², MAPE (%) and directional accuracy (%) of the leader |
+| `in_MCS` | Whether the leader belongs to the 90% Model Confidence Set |
+| `vs_baseline` | Strongest undecomposed benchmark at that horizon |
+| `Wilcoxon_p`, `beats_baseline` | Wilcoxon p-value of the leader vs. that benchmark, and whether p < 0.05 |
+| `Top3` | Three best models with their mean RMSE (truncated in the notebook display) |
+| `Proposed`, `Baseline` | Compared models |
+| `DM`, `p` | Diebold–Mariano statistic (negative = proposed model more accurate) and two-sided p-value |
+| `Conclusion` | `proposed better`, `baseline better` or `no difference` at the 5% level |
+| `test_type` | `one-sample` (deterministic benchmark: ARIMA, RW-drift) or `paired` (stochastic benchmark) |
+| `RMSE_mean`, `RMSE_std`, `base_RMSE` | Proposed model's mean and SD of RMSE across seeds; benchmark RMSE |
+| `wilcoxon_p`, `significant` | Wilcoxon p-value and whether p < 0.05 |
+| `avg_rank`, `avg_RMSE` | Mean rank and mean RMSE across the four horizons |
 
-## Consistency with Table 3
+## Files produced only by a full re-run
 
-Tables 3, 4 and 5 were checked cell by cell against `RMSE_mean_matrix.csv`,
-`R2_mean_matrix.csv` and `MAPE_mean_matrix.csv`: **all 228 values agree exactly**
-after rounding, and **all 228 † markers** match the confidence sets in
-`MCS_h*.csv`.
+Two tables were longer than the notebook's display limit and are therefore not
+included here: `aggregate_mean_std.csv` (all metrics with standard deviations,
+76 rows) and `seed_averaged_metrics.csv` (metrics of the seed-averaged forecasts,
+76 rows). The per-seed files `metrics_seed42.csv` … `metrics_seed51.csv`, the full
+`wilcoxon_seed.csv` (280 rows) and the diagnostic plots are also written to
+`outputs/` when the notebook runs.
 
-One correction was applied to the table files: STL-ARIMA-LSTM at *h* = 14
-computes to 3,249.4973, which rounds to **3,249**, but earlier drafts printed
-**3,250**. The manuscript text needs the same correction.
+## Checking the tables
 
-## Not included
+```bash
+python code/verify_tables.py
+```
 
-Two tables the notebook produces were truncated by pandas' display limit before
-the notebook was saved, so they cannot be recovered from it:
-
-- `aggregate_mean_std.csv` — per-model, per-horizon metrics **with standard
-  deviations** (76 rows).
-- `seed_averaged_metrics.csv` — metrics of the seed-averaged forecasts (76 rows).
-
-Also absent are the per-seed metric files (`metrics_seed42.csv` … `metrics_seed51.csv`)
-and the test-period predictions, which the notebook writes to its output folder
-during the run. If those files still exist in the authors' Drive folder
-(`3-results_v4/`), adding them here would make the deposit complete; otherwise
-re-running the notebook regenerates all of them.
+compares every value, † marker, bold best value and significance star in
+Tables 1 and 3–7 with the files above (305 checks).
