@@ -11,7 +11,7 @@ Cuong H. Nguyen-Dinh<sup>3,\*</sup>
 2. University of Sciences, Hue University, Hue, Viet Nam
 3. University of Finance and Marketing, Hue, Viet Nam
 
-\* Corresponding author: Cuong H. Nguyen-Dinh (ndhcuong@ufm.edu.vn)
+\* Corresponding author: Cuong H. Nguyen-Dinh (cuongndh@ufm.edu.vn)
 
 ## Contents
 
