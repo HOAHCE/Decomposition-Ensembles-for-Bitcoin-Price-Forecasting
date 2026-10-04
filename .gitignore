@@ -23,3 +23,6 @@ mlruns/
 Thumbs.db
 .idea/
 .vscode/
+
+# Outputs of notebook runs and scripts (published results live in results/)
+outputs/

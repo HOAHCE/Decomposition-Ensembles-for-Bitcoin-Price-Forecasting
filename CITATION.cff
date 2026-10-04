@@ -1,28 +1,34 @@
 cff-version: 1.2.0
-message: "If you use this repository, please cite it as below."
-title: "Decomposition Ensembles for Bitcoin Price Forecasting"
+message: "If you use this code or data, please cite the article and this repository."
+title: "Validation-Guided Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting: code, processed data and results"
 abstract: >-
-  Data, code and results supporting the manuscript "Decomposition Ensembles for
-  Bitcoin Price Forecasting", submitted to PeerJ Computer Science. The study
-  couples STL and robust STL decomposition of daily Bitcoin prices with deep
-  component learners (TCN, N-BEATS, GRU) and validation-guided forecast
-  combination, evaluated at horizons of 1, 7, 14 and 28 days.
+  Code, processed data and results supporting the article "Validation-Guided
+  Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting",
+  submitted to PeerJ Computer Science. Daily Bitcoin log prices (17 September
+  2014 to 11 June 2025, 3,921 observations) are decomposed with STL or robust
+  STL; TCN, N-BEATS and GRU learners forecast each component through a direct
+  multi-horizon interface, and component forecasts are combined by
+  validation-guided selection (Auto) or equal and validation-weighted
+  averaging. Forecasts are evaluated at 1, 7, 14 and 28 days over a 365-day
+  test period with ten random seeds, Diebold-Mariano tests and the Model
+  Confidence Set.
 type: software
 version: 1.0.0
 license: MIT
-# Source code is MIT; the data, figures, tables and results are CC BY 4.0
-# (see LICENSE-DATA.md). Zenodo records a single licence, so MIT is used here.
+# Source code is MIT; the processed data, figures, tables and results are
+# CC BY 4.0 (see LICENSE-DATA.md). Zenodo records a single licence, so MIT is used here.
 #
 # After archiving on Zenodo (see docs/zenodo-archiving.md), uncomment the next
-# line and insert the CONCEPT DOI — the one that always resolves to the newest
-# version — not the version-specific DOI:
+# line and insert the CONCEPT DOI (the one that always resolves to the newest version):
 # doi: 10.5281/zenodo.XXXXXXX
 repository-code: "https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting"
 keywords:
-  - Bitcoin
-  - time series forecasting
-  - STL decomposition
-  - deep ensembles
+  - Bitcoin price forecasting
+  - time-series decomposition
+  - STL
+  - deep ensemble learning
+  - direct multi-horizon forecasting
+  - validation-guided model selection
   - TCN
   - N-BEATS
   - GRU
@@ -40,3 +46,15 @@ authors:
     family-names: "Nguyen-Dinh"
     email: "ndhcuong@ufm.edu.vn"
     affiliation: "University of Finance and Marketing, Hue, Viet Nam"
+preferred-citation:
+  type: article
+  title: "Validation-Guided Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting"
+  journal: "PeerJ Computer Science"
+  status: submitted
+  authors:
+    - given-names: "Hoa"
+      family-names: "Tran Thai"
+    - given-names: "Thanh"
+      family-names: "Manh Le"
+    - given-names: "Cuong H."
+      family-names: "Nguyen-Dinh"
