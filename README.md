@@ -6,14 +6,15 @@ Code, raw data and results supporting the article *Validation-Guided
 Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting*,
 submitted to **PeerJ Computer Science**.
 
-> **Version 1.1.0 (October 2026) is the version for review.** The repository is
-> archived on Zenodo under the concept DOI
+> **Version 1.1.0 (7 October 2026) is the version for review:**
+> [10.5281/zenodo.23202090](https://doi.org/10.5281/zenodo.23202090)
+> (GitHub release [`v1.1.0`](https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting/releases/tag/v1.1.0)).
+> All versions share the concept DOI
 > [10.5281/zenodo.22740176](https://doi.org/10.5281/zenodo.22740176), which
 > always resolves to the latest version. Version 1.1.0 supersedes version 1.0.0
-> ([10.5281/zenodo.22740177](https://doi.org/10.5281/zenodo.22740177),
-> September 2026), an early snapshot whose notebook comments were not yet in
-> English and whose README was incomplete; please do not use version 1.0.0.
-> The changes are listed in [`CHANGELOG.md`](CHANGELOG.md).
+> (10.5281/zenodo.22740177, September 2026), an early snapshot whose notebook
+> comments were not yet in English and whose README was incomplete; please do
+> not use version 1.0.0. The changes are listed in [`CHANGELOG.md`](CHANGELOG.md).
 
 **Authors:** Hoa Tran Thai<sup>1</sup>, Thanh Manh Le<sup>2</sup>,
 Cuong H. Nguyen-Dinh<sup>3,\*</sup>
@@ -324,14 +325,16 @@ and the archived code and data:
 > Hoa Tran Thai, Thanh Manh Le, Cuong H. Nguyen-Dinh. 2026. Validation-Guided
 > Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting:
 > code, raw data and results. Version 1.1.0. Zenodo.
-> https://doi.org/10.5281/zenodo.22740176
+> https://doi.org/10.5281/zenodo.23202090
 
 **Data and code availability.** The code, raw data, processed data and results
 are available on GitHub at
 <https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting>
-and archived on Zenodo under the concept DOI
+and archived on Zenodo: version 1.1.0, the version for review, at
+[10.5281/zenodo.23202090](https://doi.org/10.5281/zenodo.23202090); all
+versions under the concept DOI
 [10.5281/zenodo.22740176](https://doi.org/10.5281/zenodo.22740176), which always
-resolves to the latest version (1.1.0). Machine-readable metadata are in
+resolves to the latest version. Machine-readable metadata are in
 [`CITATION.cff`](CITATION.cff).
 
 Methods implemented in this repository:
