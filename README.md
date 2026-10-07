@@ -1,8 +1,19 @@
 # Validation-Guided Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting
 
-Code, processed data and results supporting the article *Validation-Guided
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22740176.svg)](https://doi.org/10.5281/zenodo.22740176)
+
+Code, raw data and results supporting the article *Validation-Guided
 Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting*,
 submitted to **PeerJ Computer Science**.
+
+> **Version 1.1.0 (October 2026) is the version for review.** The repository is
+> archived on Zenodo under the concept DOI
+> [10.5281/zenodo.22740176](https://doi.org/10.5281/zenodo.22740176), which
+> always resolves to the latest version. Version 1.1.0 supersedes version 1.0.0
+> ([10.5281/zenodo.22740177](https://doi.org/10.5281/zenodo.22740177),
+> September 2026), an early snapshot whose notebook comments were not yet in
+> English and whose README was incomplete; please do not use version 1.0.0.
+> The changes are listed in [`CHANGELOG.md`](CHANGELOG.md).
 
 **Authors:** Hoa Tran Thai<sup>1</sup>, Thanh Manh Le<sup>2</sup>,
 Cuong H. Nguyen-Dinh<sup>3,\*</sup>
@@ -52,8 +63,8 @@ Decomposition-based ensembles led at all four horizons. STL-Auto achieved the
 lowest root mean squared error (RMSE) at one day (1,821 USD) and at 28 days
 (4,219 USD, R² = 0.938), where it reduced RMSE by 61.6% relative to ARIMA.
 
-Everything needed to reproduce the article's numbers is included: the processed
-data, the experiment notebook (with the outputs of the published run), the
+Everything needed to reproduce the article's numbers is included: the raw and
+processed data, the experiment notebook (with the outputs of the published run), the
 extracted result tables, scripts that rebuild Table 1, check Tables 1 and 3–7
 and redraw Figures 2–5, and the tables and figures themselves.
 
@@ -67,12 +78,17 @@ and redraw Figures 2–5, and the tables and figures themselves.
 | Variables | Open, High, Low, Close (USD) and Volume; **Close is the forecast target** |
 | Split | Development 2014-09-17 to 2024-06-11 (3,556 days; its final 10% of training windows is the validation block) · Test 2024-06-12 to 2025-06-11 (365 days) |
 
-Only the **processed** data are stored, in [`data/processed/`](data/processed):
+The repository holds the **raw data** exactly as used in the study and the
+**processed data** derived from them:
 
 | File | Contents |
 | :--- | :--- |
-| [`BTC_USD_daily_OHLCV_processed.csv`](data/processed/BTC_USD_daily_OHLCV_processed.csv) | Cleaned daily OHLCV series with a `Sample` column (`development` / `test`). Input file of the experiment. |
-| [`BTC_USD_daily_log_STL_components.csv`](data/processed/BTC_USD_daily_log_STL_components.csv) | Log-transformed OHLCV inputs and the trend, seasonal and remainder components of ln(Close) from STL and rSTL (period 30). |
+| [`data/raw/BTC_USD_daily_2014-09-17_2025-06-11.csv`](data/raw/BTC_USD_daily_2014-09-17_2025-06-11.csv) | **Raw data.** Daily `BTC-USD` bars from Yahoo Finance (`yfinance` layout: Date, Open, High, Low, Close, Volume, Dividends, Stock Splits), unmodified from the file used in the study. |
+| [`data/processed/BTC_USD_daily_OHLCV_processed.csv`](data/processed/BTC_USD_daily_OHLCV_processed.csv) | Curated daily OHLCV series with a `Sample` column (`development` / `test`). The OHLCV values are identical to the raw file; only the two all-zero columns are dropped and the dates are written as `YYYY-MM-DD`. Input file of the experiment. |
+| [`data/processed/BTC_USD_daily_log_STL_components.csv`](data/processed/BTC_USD_daily_log_STL_components.csv) | Log-transformed OHLCV inputs and the trend, seasonal and remainder components of ln(Close) from STL and rSTL (period 30). |
+
+`python code/prepare_data.py --check` confirms that the raw file reproduces the
+processed files exactly.
 
 The price level and log price are non-stationary (ADF p = 0.973 and 0.815),
 whereas daily log returns are stationary with excess kurtosis 11.44 (Table 1).
@@ -86,7 +102,7 @@ All code is Python. Scripts are run from the repository root.
 | File | Purpose |
 | :--- | :--- |
 | [`code/decomposition_ensemble_experiments.ipynb`](code/decomposition_ensemble_experiments.ipynb) | Main experiment: decomposition, direct multi-horizon learners, ensembles, benchmarks, metrics, Diebold–Mariano tests, Model Confidence Set and Wilcoxon tests (Tables 3–7; data for Figures 2–5). Saved with the outputs of the published run. |
-| [`code/prepare_data.py`](code/prepare_data.py) | Builds the processed files from a raw `BTC-USD` download, or verifies the committed ones (`--check`). |
+| [`code/prepare_data.py`](code/prepare_data.py) | Builds the processed files from the raw `BTC-USD` file (`--raw`), or verifies that the raw and processed files agree (`--check`). |
 | [`code/descriptive_statistics.py`](code/descriptive_statistics.py) | Reproduces Table 1. |
 | [`code/extract_notebook_results.py`](code/extract_notebook_results.py) | Exports the result tables stored in the notebook outputs to `results/*.csv`. |
 | [`code/verify_tables.py`](code/verify_tables.py) | Checks every value of Tables 1 and 3–7 against the computed results. |
@@ -115,7 +131,7 @@ pip install -r requirements.txt
 ### 4.2 Check the published numbers (seconds, no GPU)
 
 ```bash
-python code/prepare_data.py --check     # processed data are consistent with the cleaning/decomposition code
+python code/prepare_data.py --check     # raw -> processed data are reproduced by the cleaning/decomposition code
 python code/descriptive_statistics.py   # Table 1
 python code/verify_tables.py            # Tables 1 and 3-7 vs. computed results (305 checks)
 python code/make_figures.py             # redraw Figures 2-5 into outputs/figures/
@@ -266,13 +282,15 @@ Leading model at each horizon ([Table 6](tables/Table_6.md)):
 ├── README.md                      This file
 ├── code/
 │   ├── decomposition_ensemble_experiments.ipynb   Main experiment (outputs of the published run)
-│   ├── prepare_data.py                            Raw download -> data/processed/ (or --check)
+│   ├── prepare_data.py                            data/raw/ -> data/processed/ (or --check)
 │   ├── descriptive_statistics.py                  Table 1
 │   ├── extract_notebook_results.py                Notebook outputs -> results/*.csv
 │   ├── verify_tables.py                           Tables 1, 3-7 vs. computed results
 │   ├── make_figures.py                            Figures 2-5 from results/*.csv
 │   └── README.md
 ├── data/
+│   ├── raw/
+│   │   └── BTC_USD_daily_2014-09-17_2025-06-11.csv Raw Yahoo Finance data (unmodified)
 │   ├── processed/
 │   │   ├── BTC_USD_daily_OHLCV_processed.csv      Cleaned OHLCV + sample split
 │   │   └── BTC_USD_daily_log_STL_components.csv   Log inputs + STL/rSTL components
@@ -280,8 +298,9 @@ Leading model at each horizon ([Table 6](tables/Table_6.md)):
 ├── results/                       Result CSVs behind Tables 1, 3-7 and Figures 2-5
 ├── tables/                        Tables 1-7 (.docx and .md)
 ├── figures/                       Figures 1-5 (.png)
-├── docs/zenodo-archiving.md       How to archive a release on Zenodo (DOI)
+├── docs/zenodo-archiving.md       Zenodo archive (DOI) and how to add a new version
 ├── requirements.txt               Python dependencies
+├── CHANGELOG.md                   Version history (v1.1.0 supersedes v1.0.0)
 ├── CITATION.cff                   Citation metadata
 ├── AUTHORS.md                     Authors and affiliations
 ├── LICENSE                        MIT (code)
@@ -300,8 +319,20 @@ updated on publication):
 > Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting.
 > *PeerJ Computer Science* (submitted).
 
-and the repository: <https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting>.
-Machine-readable metadata are in [`CITATION.cff`](CITATION.cff).
+and the archived code and data:
+
+> Hoa Tran Thai, Thanh Manh Le, Cuong H. Nguyen-Dinh. 2026. Validation-Guided
+> Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting:
+> code, raw data and results. Version 1.1.0. Zenodo.
+> https://doi.org/10.5281/zenodo.22740176
+
+**Data and code availability.** The code, raw data, processed data and results
+are available on GitHub at
+<https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting>
+and archived on Zenodo under the concept DOI
+[10.5281/zenodo.22740176](https://doi.org/10.5281/zenodo.22740176), which always
+resolves to the latest version (1.1.0). Machine-readable metadata are in
+[`CITATION.cff`](CITATION.cff).
 
 Methods implemented in this repository:
 
@@ -315,7 +346,7 @@ Data source: Yahoo Finance, `BTC-USD` daily prices.
 ## 10. License and contribution guidelines
 
 **License.** Source code is released under the [MIT License](LICENSE). The
-processed data, tables, figures and result files are released under the
+raw and processed data, tables, figures and result files are released under the
 [Creative Commons Attribution 4.0 International License](LICENSE-DATA.md)
 (CC BY 4.0).
 
@@ -327,4 +358,4 @@ table or file. Pull requests that fix bugs or improve documentation are welcome;
 please keep the published `results/`, `tables/` and `figures/` unchanged so
 that they continue to match the article, and describe any change that affects
 the numbers. For other enquiries, contact the corresponding author,
-Cuong H. Nguyen-Dinh (ndhcuong@ufm.edu.vn).
+Cuong H. Nguyen-Dinh (cuongndh@ufm.edu.vn).

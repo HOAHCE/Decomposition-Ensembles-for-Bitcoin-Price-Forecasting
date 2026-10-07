@@ -3,7 +3,7 @@
 | File | Purpose | Run time |
 | :--- | :--- | :--- |
 | [`decomposition_ensemble_experiments.ipynb`](decomposition_ensemble_experiments.ipynb) | **Main experiment.** Decomposition, direct multi-horizon learners, ensembles, benchmarks, metrics and statistical tests (Tables 3–7, data for Figures 2–5). Stored outputs are those of the published run. | ≈ 1.5 h on a T4 GPU (full); ≈ 25 min on a 4-core CPU with `QUICK_MODE=1` |
-| [`prepare_data.py`](prepare_data.py) | Builds `data/processed/` from a raw `BTC-USD` download (`--raw`) or verifies the committed files (`--check`). | seconds |
+| [`prepare_data.py`](prepare_data.py) | Builds `data/processed/` from the raw file in `data/raw/` (`--raw`) or verifies that the raw and processed files agree (`--check`). | seconds |
 | [`descriptive_statistics.py`](descriptive_statistics.py) | Reproduces Table 1 and writes `results/descriptive_statistics.csv`. | seconds |
 | [`extract_notebook_results.py`](extract_notebook_results.py) | Exports the result tables stored in the notebook's outputs to `results/*.csv`. | seconds |
 | [`verify_tables.py`](verify_tables.py) | Checks every value of Tables 1 and 3–7 (`tables/*.docx`) against the computed results. | seconds |

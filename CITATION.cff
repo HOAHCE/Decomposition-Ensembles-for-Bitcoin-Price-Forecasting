@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If you use this code or data, please cite the article and this repository."
-title: "Validation-Guided Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting: code, processed data and results"
+title: "Validation-Guided Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting: code, raw data and results"
 abstract: >-
-  Code, processed data and results supporting the article "Validation-Guided
+  Code, raw and processed data and results supporting the article "Validation-Guided
   Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting",
   submitted to PeerJ Computer Science. Daily Bitcoin log prices (17 September
   2014 to 11 June 2025, 3,921 observations) are decomposed with STL or robust
@@ -13,14 +13,19 @@ abstract: >-
   test period with ten random seeds, Diebold-Mariano tests and the Model
   Confidence Set.
 type: software
-version: 1.0.0
+version: 1.1.0
+date-released: "2026-10-07"
 license: MIT
-# Source code is MIT; the processed data, figures, tables and results are
+# Source code is MIT; the raw and processed data, figures, tables and results are
 # CC BY 4.0 (see LICENSE-DATA.md). Zenodo records a single licence, so MIT is used here.
 #
-# After archiving on Zenodo (see docs/zenodo-archiving.md), uncomment the next
-# line and insert the CONCEPT DOI (the one that always resolves to the newest version):
-# doi: 10.5281/zenodo.XXXXXXX
+# Concept DOI of the Zenodo archive: always resolves to the newest version.
+# Version 1.0.0 (10.5281/zenodo.22740177) is superseded by version 1.1.0.
+doi: 10.5281/zenodo.22740176
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.22740176
+    description: "Zenodo concept DOI (all versions; resolves to the latest)"
 repository-code: "https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting"
 keywords:
   - Bitcoin price forecasting
@@ -37,14 +42,14 @@ authors:
   - given-names: "Hoa"
     family-names: "Tran Thai"
     email: "tranthaihoa@hueuni.edu.vn"
-    affiliation: "University of Economics, Hue University, Hue, Viet Nam; University of Sciences, Hue University, Hue, Viet Nam"
+    affiliation: "University of Economics, Hue University, Hue, Viet Nam"
   - given-names: "Thanh"
     family-names: "Manh Le"
     email: "lmthanh@hueuni.edu.vn"
     affiliation: "University of Sciences, Hue University, Hue, Viet Nam"
   - given-names: "Cuong H."
     family-names: "Nguyen-Dinh"
-    email: "ndhcuong@ufm.edu.vn"
+    email: "cuongndh@ufm.edu.vn"
     affiliation: "University of Finance and Marketing, Hue, Viet Nam"
 preferred-citation:
   type: article

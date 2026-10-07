@@ -1,9 +1,15 @@
 # Data
 
-This folder holds the **processed** daily Bitcoin data used in every experiment of
-the study. The processing is deterministic and is implemented in
+This folder holds the **raw** daily Bitcoin data, exactly as used in the study, and the
+**processed** data used in every experiment of the study. The processing is
+deterministic and is implemented in
 [`../code/prepare_data.py`](../code/prepare_data.py); the experiment notebook
 repeats the same steps internally, so both routes give identical series.
+
+| Folder | Contents |
+| :--- | :--- |
+| [`raw/`](raw) | `BTC_USD_daily_2014-09-17_2025-06-11.csv` — the raw Yahoo Finance data, unmodified. |
+| [`processed/`](processed) | The curated OHLCV series used as model input, and the log-transformed inputs with their STL/rSTL components. |
 
 ## Source
 
@@ -41,10 +47,30 @@ original quotes is subject to Yahoo's terms of service.
 
 ## Files
 
+### `raw/BTC_USD_daily_2014-09-17_2025-06-11.csv` (raw data)
+
+Daily `BTC-USD` bars from Yahoo Finance in the `yfinance` layout, one row per
+day, 3,921 rows. The file is kept byte for byte as used in the study. Twenty-two
+`Volume` values between 2021-01-11 and 2025-02-03 are stored in scientific
+notation with six significant digits (for example `1.04105E+11`), as in the
+file used for the experiments; they are read as numbers.
+
+| Column | Type | Unit | Description |
+| :--- | :--- | :--- | :--- |
+| `Date` | timestamp (`YYYY-MM-DD 00:00:00+00:00`) | – | Trading day (UTC) |
+| `Open` | float | USD | Opening price |
+| `High` | float | USD | Highest price of the day |
+| `Low` | float | USD | Lowest price of the day |
+| `Close` | float | USD | Closing price (forecast target) |
+| `Volume` | number | USD | Traded volume |
+| `Dividends` | integer | – | Always 0 for a cryptocurrency; discarded |
+| `Stock Splits` | integer | – | Always 0 for a cryptocurrency; discarded |
+
 ### `processed/BTC_USD_daily_OHLCV_processed.csv`
 
 Cleaned daily OHLCV series, one row per day. **This is the input file of the
-experiment notebook.**
+experiment notebook.** The `Open`–`Volume` values are identical to the raw
+file.
 
 | Column | Type | Unit | Description |
 | :--- | :--- | :--- | :--- |
@@ -101,13 +127,15 @@ stl = comps[["STL_trend", "STL_seasonal", "STL_remainder"]]
 ## Rebuilding and checking the processed files
 
 ```bash
-# Verify the committed files (re-runs the cleaning and decomposition and compares)
+# Verify the committed files: the raw file must clean to the processed OHLCV file
+# exactly, and a fresh decomposition must match the stored components
 python code/prepare_data.py --check
 
-# Rebuild them from a raw yfinance-format download of BTC-USD
-python code/prepare_data.py --raw path/to/BTC-USD_daily.csv
+# Rebuild the processed files from the raw file (or from any yfinance-format
+# download of BTC-USD)
+python code/prepare_data.py --raw data/raw/BTC_USD_daily_2014-09-17_2025-06-11.csv
 ```
 
 Yahoo Finance occasionally revises historical volumes, so a fresh download may
-differ slightly from the series used in the study; the committed processed files
-are the exact data behind the published results.
+differ slightly from the series used in the study; the committed raw and
+processed files are the exact data behind the published results.
