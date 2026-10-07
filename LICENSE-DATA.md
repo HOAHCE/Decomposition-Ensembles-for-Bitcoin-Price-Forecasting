@@ -10,9 +10,9 @@ indicate if changes were made.
 
 Full licence text: https://creativecommons.org/licenses/by/4.0/legalcode
 
-The processed data in `data/` are derived from daily `BTC-USD` prices published
-by Yahoo Finance; use of the original quotes is subject to Yahoo's terms of
-service.
+The raw data in `data/raw/` are daily `BTC-USD` prices published by Yahoo
+Finance, and the processed data in `data/processed/` are derived from them; use
+of the original quotes is subject to Yahoo's terms of service.
 
 Source code in this repository is licensed separately under the MIT License;
 see [LICENSE](LICENSE).
@@ -22,4 +22,5 @@ see [LICENSE](LICENSE).
 > Hoa Tran Thai, Thanh Manh Le, Cuong H. Nguyen-Dinh. Validation-Guided
 > Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting.
 > PeerJ Computer Science (submitted).
-> https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting
+> Code and data: https://doi.org/10.5281/zenodo.22740176
+> (https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting)

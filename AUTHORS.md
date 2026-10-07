@@ -1,6 +1,6 @@
 # Authors
 
-Hoa Tran Thai <sup>1,2</sup>, Thanh Manh Le <sup>2</sup>, Cuong H. Nguyen-Dinh <sup>3,\*</sup>
+Hoa Tran Thai <sup>1</sup>, Thanh Manh Le <sup>2</sup>, Cuong H. Nguyen-Dinh <sup>3,\*</sup>
 
 ## Affiliations
 
@@ -12,8 +12,8 @@ Hoa Tran Thai <sup>1,2</sup>, Thanh Manh Le <sup>2</sup>, Cuong H. Nguyen-Dinh <
 
 ## Contact
 
-| Author | Affiliation(s) | Email |
+| Author | Affiliation | Email |
 | :--- | :--- | :--- |
-| Hoa Tran Thai | 1, 2 | tranthaihoa@hueuni.edu.vn |
+| Hoa Tran Thai | 1 | tranthaihoa@hueuni.edu.vn |
 | Thanh Manh Le | 2 | lmthanh@hueuni.edu.vn |
-| Cuong H. Nguyen-Dinh (corresponding author) | 3 | ndhcuong@ufm.edu.vn |
+| Cuong H. Nguyen-Dinh (corresponding author) | 3 | cuongndh@ufm.edu.vn |

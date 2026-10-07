@@ -1,15 +1,15 @@
 {
-  "title": "Validation-Guided Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting: code, processed data and results",
+  "title": "Validation-Guided Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting: code, raw data and results",
   "upload_type": "software",
   "access_right": "open",
   "license": "MIT",
   "language": "eng",
-  "version": "1.0.0",
-  "description": "<p>Code, processed data and results supporting the article <em>\"Validation-Guided Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting\"</em>, submitted to <em>PeerJ Computer Science</em>.</p><p>Daily Bitcoin prices (Yahoo Finance, BTC-USD, 17 September 2014 to 11 June 2025, 3,921 observations) are log-transformed and decomposed into trend, seasonal and remainder components with STL or robust STL (period 30 days). Temporal convolutional networks, N-BEATS and gated recurrent units forecast each component through a common direct multi-horizon interface (one 60-day window to a 28-day forecast vector). Component forecasts are combined by validation-guided selection (Auto) or by equal (EnsAvg) and inverse-validation-loss weighted (EnsWgt) averaging. Nineteen specifications, including ARIMA, a random walk with drift, matched undecomposed deep models and STL-ARIMA-LSTM hybrids, are evaluated at horizons of 1, 7, 14 and 28 days over a 365-day test period with ten random seeds, Diebold-Mariano tests and the Model Confidence Set (alpha = 0.10).</p><p>This deposit contains the processed data, the experiment notebook with the outputs of the published run, scripts that rebuild Table 1, verify Tables 1 and 3-7 and redraw Figures 2-5, the extracted result tables, and Tables 1-7 and Figures 1-5 of the article.</p><p><strong>Licensing:</strong> source code is released under the MIT License; the processed data, figures, tables and result files are released under CC BY 4.0. See LICENSE and LICENSE-DATA.md in the repository.</p>",
+  "version": "1.1.0",
+  "description": "<p>Code, raw data and results supporting the article <em>\"Validation-Guided Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting\"</em>, submitted to <em>PeerJ Computer Science</em>.</p><p>Daily Bitcoin prices (Yahoo Finance, BTC-USD, 17 September 2014 to 11 June 2025, 3,921 observations) are log-transformed and decomposed into trend, seasonal and remainder components with STL or robust STL (period 30 days). Temporal convolutional networks, N-BEATS and gated recurrent units forecast each component through a common direct multi-horizon interface (one 60-day window to a 28-day forecast vector). Component forecasts are combined by validation-guided selection (Auto) or by equal (EnsAvg) and inverse-validation-loss weighted (EnsWgt) averaging. Nineteen specifications, including ARIMA, a random walk with drift, matched undecomposed deep models and STL-ARIMA-LSTM hybrids, are evaluated at horizons of 1, 7, 14 and 28 days over a 365-day test period with ten random seeds, Diebold-Mariano tests and the Model Confidence Set (alpha = 0.10).</p><p>This deposit contains the raw data (Yahoo Finance BTC-USD daily prices, unmodified from the file used in the study), the processed data, the experiment notebook with the outputs of the published run, scripts that rebuild Table 1, verify Tables 1 and 3-7 and redraw Figures 2-5, the extracted result tables, and Tables 1-7 and Figures 1-5 of the article.</p><p><strong>Licensing:</strong> source code is released under the MIT License; the raw and processed data, figures, tables and result files are released under CC BY 4.0. See LICENSE and LICENSE-DATA.md in the repository.</p><p><strong>Version 1.1.0</strong> supersedes version 1.0.0 (10.5281/zenodo.22740177), an early snapshot whose notebook comments were not yet in English and whose README was incomplete. All code comments, notebook text and outputs are in English; see CHANGELOG.md.</p>",
   "creators": [
     {
       "name": "Tran Thai, Hoa",
-      "affiliation": "University of Economics, Hue University, Hue, Viet Nam; University of Sciences, Hue University, Hue, Viet Nam"
+      "affiliation": "University of Economics, Hue University, Hue, Viet Nam"
     },
     {
       "name": "Manh Le, Thanh",
@@ -42,5 +42,5 @@
       "scheme": "url"
     }
   ],
-  "notes": "Supporting material for a manuscript submitted to PeerJ Computer Science. Add the article DOI as a related identifier (relation: isSupplementTo) once the article is published."
+  "notes": "Supporting material for a manuscript submitted to PeerJ Computer Science. Version 1.1.0 is the version for review. Add the article DOI as a related identifier (relation: isSupplementTo) once the article is published."
 }

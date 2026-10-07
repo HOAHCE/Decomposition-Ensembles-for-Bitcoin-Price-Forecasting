@@ -3,7 +3,9 @@
 The experiment uses daily BTC-USD prices from Yahoo Finance (17 September 2014 -
 11 June 2025, 3,921 observations). This script turns a raw daily file in the
 layout produced by `yfinance` (`Date, Open, High, Low, Close, Volume, Dividends,
-Stock Splits`) into the two processed files stored in `data/processed/`:
+Stock Splits`) - the raw file used in the study is
+`data/raw/BTC_USD_daily_2014-09-17_2025-06-11.csv` - into the two processed files
+stored in `data/processed/`:
 
 1. `BTC_USD_daily_OHLCV_processed.csv`
    Cleaned daily OHLCV levels, one row per day, plus the chronological sample
@@ -19,8 +21,8 @@ The cleaning and decomposition steps are identical to Sections 2-3 of
 same series when it reads file 1.
 
 Usage:
-    python code/prepare_data.py --raw path/to/BTC-USD_daily.csv
-    python code/prepare_data.py --check   # verify the committed processed files
+    python code/prepare_data.py --raw data/raw/BTC_USD_daily_2014-09-17_2025-06-11.csv
+    python code/prepare_data.py --check   # verify raw -> processed and the processed files
 """
 
 from __future__ import annotations
@@ -33,6 +35,7 @@ import pandas as pd
 from statsmodels.tsa.seasonal import STL
 
 REPO = Path(__file__).resolve().parent.parent
+RAW_FILE = REPO / "data" / "raw" / "BTC_USD_daily_2014-09-17_2025-06-11.csv"
 OUT_DIR = REPO / "data" / "processed"
 OHLCV_FILE = OUT_DIR / "BTC_USD_daily_OHLCV_processed.csv"
 COMPONENTS_FILE = OUT_DIR / "BTC_USD_daily_log_STL_components.csv"
@@ -115,7 +118,7 @@ def main() -> None:
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--raw", type=Path, help="raw daily CSV in yfinance layout")
     group.add_argument("--check", action="store_true",
-                       help="rebuild from the committed OHLCV file and compare")
+                       help="rebuild from the committed raw and OHLCV files and compare")
     args = parser.parse_args()
 
     if args.raw:
@@ -129,10 +132,15 @@ def main() -> None:
         summary(ohlcv, comps)
         return
 
-    # --check: the processed OHLCV file must survive the same cleaning step
-    # unchanged, and the stored components must match a fresh decomposition.
+    # --check: the raw file must clean to the stored OHLCV file, the processed
+    # OHLCV file must survive the same cleaning step unchanged, and the stored
+    # components must match a fresh decomposition.
     stored_ohlcv = pd.read_csv(OHLCV_FILE)
     stored_comps = pd.read_csv(COMPONENTS_FILE, index_col="Date")
+    if RAW_FILE.exists():
+        from_raw, _ = build(clean_ohlcv(pd.read_csv(RAW_FILE)))
+        pd.testing.assert_frame_equal(from_raw, stored_ohlcv.set_index("Date"), check_exact=True)
+        print(f"Raw file: {RAW_FILE.relative_to(REPO)} cleans to the processed OHLCV file exactly.")
     df = clean_ohlcv(stored_ohlcv)
     ohlcv, comps = build(df)
     pd.testing.assert_frame_equal(ohlcv, stored_ohlcv.set_index("Date"), check_exact=True)
