@@ -10,8 +10,8 @@ private or deleted — so the repository is archived on
 | | DOI | Contents |
 | :--- | :--- | :--- |
 | **Concept DOI** (all versions) | [10.5281/zenodo.22740176](https://doi.org/10.5281/zenodo.22740176) | Always resolves to the newest version. Cite this one in the article and in `CITATION.cff`. |
-| Version 1.0.0 (September 2026) | [10.5281/zenodo.22740177](https://doi.org/10.5281/zenodo.22740177) | Early snapshot with Vietnamese notebook comments. **Superseded.** |
-| Version 1.1.0 (October 2026) | assigned by Zenodo when the version is published | The version for review (GitHub release `v1.1.0`). |
+| Version 1.0.0 (September 2026) | 10.5281/zenodo.22740177 | Early snapshot with Vietnamese notebook comments. **Superseded; do not use.** |
+| **Version 1.1.0** (7 October 2026) | [10.5281/zenodo.23202090](https://doi.org/10.5281/zenodo.23202090) | **The version for review.** Identical to GitHub release `v1.1.0` (the ZIP has MD5 `c00fee19f4637fedbb0d1ce8eb382046`). |
 
 The record was created by a manual upload of a ZIP of the repository, not by
 the Zenodo–GitHub integration. New versions are therefore added **manually, as
@@ -38,7 +38,7 @@ Only the owner of the Zenodo record can do this.
    | Resource type | Software |
    | Title | Validation-Guided Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting: code, raw data and results |
    | Publication date | date of the release |
-   | Creators | Tran Thai, Hoa — University of Economics, Hue University · Manh Le, Thanh — University of Sciences, Hue University · Nguyen-Dinh, Cuong H. — University of Finance and Marketing (contact person) |
+   | Creators | Tran Thai, Hoa — University of Economics, Hue University · Le, Thanh Manh — University of Sciences, Hue University · Nguyen-Dinh, Cuong H. — University of Finance and Marketing (contact person) |
    | Description | the `description` field of `.zenodo.json` |
    | Version | 1.1.0 |
    | Licenses | MIT License (code) and Creative Commons Attribution 4.0 International (data, tables, figures, results) |
@@ -47,19 +47,25 @@ Only the owner of the Zenodo record can do this.
 
 5. **Publish**, then note the new version DOI shown on the record page and
    add it to the table above and to [`../CHANGELOG.md`](../CHANGELOG.md).
-6. **Mark the old version.** Open version 1.0.0, click **Edit**, add at the top
-   of its description *"Superseded by version 1.1.0. Please use
-   https://doi.org/10.5281/zenodo.22740176 (latest version)."* and publish the
-   metadata change. Files of a published version cannot be changed, but its
-   description can.
+6. **Retire the old version.** Either mark it: open the old version, click
+   **Edit**, add at the top of its description *"SUPERSEDED: replaced by
+   version X.Y.Z (https://doi.org/10.5281/zenodo.NNNNNNNN). The latest version
+   is always available at https://doi.org/10.5281/zenodo.22740176."* and
+   publish the metadata change. Or, within 30 days of its publication, delete
+   it: on its record page choose **Manage → Delete record**; its DOI then
+   shows a tombstone page. Deletion cannot be undone.
+
+The metadata of a published version (licences, keywords, description) can be
+corrected at any time with **Edit → Publish** without changing its DOI or
+files.
 
 ## Data availability statement
 
 > The code, raw data and results underlying this article are available on
 > GitHub at
 > https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting
-> and archived on Zenodo at https://doi.org/10.5281/zenodo.22740176
-> (version 1.1.0).
+> and archived on Zenodo at https://doi.org/10.5281/zenodo.23202090
+> (version 1.1.0; all versions: https://doi.org/10.5281/zenodo.22740176).
 
 ## Before each release, check
 

@@ -4,8 +4,10 @@ All versions are archived on Zenodo under the concept DOI
 [10.5281/zenodo.22740176](https://doi.org/10.5281/zenodo.22740176), which always
 resolves to the latest version.
 
-## 1.1.0 — October 2026 (version for review)
+## 1.1.0 — 7 October 2026 (version for review)
 
+[10.5281/zenodo.23202090](https://doi.org/10.5281/zenodo.23202090) · GitHub
+release [`v1.1.0`](https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting/releases/tag/v1.1.0).
 This version supersedes 1.0.0 and is the one that accompanies the PeerJ
 Computer Science submission. No computation was changed: the computed results
 are identical to version 1.0.0.
@@ -52,7 +54,7 @@ are identical to version 1.0.0.
 
 ## 1.0.0 — September 2026 (superseded)
 
-[10.5281/zenodo.22740177](https://doi.org/10.5281/zenodo.22740177). Initial
+10.5281/zenodo.22740177. Initial
 snapshot: experiment notebook with Vietnamese comments, raw data, extracted
 result CSVs, Figures 1–4 and Table 3. **Superseded by version 1.1.0; please do
 not use it for review.**

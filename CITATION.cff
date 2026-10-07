@@ -20,12 +20,16 @@ license: MIT
 # CC BY 4.0 (see LICENSE-DATA.md). Zenodo records a single licence, so MIT is used here.
 #
 # Concept DOI of the Zenodo archive: always resolves to the newest version.
-# Version 1.0.0 (10.5281/zenodo.22740177) is superseded by version 1.1.0.
+# Version 1.1.0 (the version for review) is 10.5281/zenodo.23202090; it
+# supersedes version 1.0.0 (10.5281/zenodo.22740177).
 doi: 10.5281/zenodo.22740176
 identifiers:
   - type: doi
     value: 10.5281/zenodo.22740176
     description: "Zenodo concept DOI (all versions; resolves to the latest)"
+  - type: doi
+    value: 10.5281/zenodo.23202090
+    description: "Zenodo DOI of version 1.1.0"
 repository-code: "https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting"
 keywords:
   - Bitcoin price forecasting
@@ -43,8 +47,8 @@ authors:
     family-names: "Tran Thai"
     email: "tranthaihoa@hueuni.edu.vn"
     affiliation: "University of Economics, Hue University, Hue, Viet Nam"
-  - given-names: "Thanh"
-    family-names: "Manh Le"
+  - given-names: "Thanh Manh"
+    family-names: "Le"
     email: "lmthanh@hueuni.edu.vn"
     affiliation: "University of Sciences, Hue University, Hue, Viet Nam"
   - given-names: "Cuong H."
@@ -59,7 +63,7 @@ preferred-citation:
   authors:
     - given-names: "Hoa"
       family-names: "Tran Thai"
-    - given-names: "Thanh"
-      family-names: "Manh Le"
+    - given-names: "Thanh Manh"
+      family-names: "Le"
     - given-names: "Cuong H."
       family-names: "Nguyen-Dinh"

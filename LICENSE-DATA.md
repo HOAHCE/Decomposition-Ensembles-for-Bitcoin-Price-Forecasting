@@ -22,5 +22,6 @@ see [LICENSE](LICENSE).
 > Hoa Tran Thai, Thanh Manh Le, Cuong H. Nguyen-Dinh. Validation-Guided
 > Decomposition Ensembles for Direct Multi-Horizon Bitcoin Price Forecasting.
 > PeerJ Computer Science (submitted).
-> Code and data: https://doi.org/10.5281/zenodo.22740176
+> Code and data: https://doi.org/10.5281/zenodo.23202090 (version 1.1.0;
+> all versions: https://doi.org/10.5281/zenodo.22740176)
 > (https://github.com/HOAHCE/Decomposition-Ensembles-for-Bitcoin-Price-Forecasting)
